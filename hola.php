@@ -7,6 +7,7 @@
 </head>
 <body>
     <?php
+        //Esto es un comentario
         echo "Hola mundo<br>";
         echo date("d/m/Y");
     ?>

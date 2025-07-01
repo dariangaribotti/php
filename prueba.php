@@ -1,0 +1,127 @@
+<?php
+
+/*
+$aAgenda = array(); //
+$aAgenda[0] = array(); //Dias-primera-fila
+$aAgenda[1] = array(); //Estado-segunda-fila
+
+$aAgenda[0][0] = "Lu";
+$aAgenda[0][1] = "Mar";
+$aAgenda[0][2] = "Mier";
+$aAgenda[0][3] = "Jue";
+$aAgenda[0][4] = "Vier";
+
+$aAgenda[1][0] = "Curso";
+$aAgenda[1][1] = "Libre";
+$aAgenda[1][2] = "Curso";
+$aAgenda[1][3] = "Libre";
+$aAgenda[1][4] = "Curso";
+
+print_r($aAgenda);
+
+$aArray = array(
+    array("Lunes", "Martes", "Miercoles", "Jueves"),
+    array("Libre", "Ocupado", "Libre", "Ocupado")
+);
+
+print_r($aArray);
+
+// El auto Ford del año 1908 es de color Negro y su precio es USD 800 a USD 1000
+// Concatenacion [.]
+
+$aAuto = array();
+$aAuto["marca"] = "Ford";
+$aAuto["color"] = array("Negro", "Verde"); 
+$aAuto["anio"] = 1908;
+$aAuto["precio"] = "USD 800 a USD 1000";
+
+// echo "El auto " . $aAuto["marca"] . " del año " . $aAuto["anio"] . " es de color " . $aAuto["color"][1] . " y su precio es " . $aAuto["precio"];
+
+$nombre = "juan";
+$apellido = "gabriel";
+
+// echo "Me llamo $nombre $apellido";
+
+// Suma - Operadores
+
+$num1 = 50;
+$num2 = 10;
+$resultado = $num1 + $num2;
+
+echo $resultado;
+
+// Caracteres escapados
+
+$num1 = 50;
+$num2 = 10;
+
+echo "El numero de \$num1 es $num1"; // Contra barra => \\
+
+
+// Operadores logicos
+
+// Control de flujo => Condicional True or False
+
+$bVariable = true;
+
+if ( $bVariable == true ) {
+    echo "Hola mundo!";
+}
+
+// Sentencias condicionales
+
+$edad = 17;
+
+if ( $edad >= 18 ) {
+
+    echo "Es mayor de edad";
+
+} else {
+    echo "Es menor de edad";
+}
+
+// Actividad
+
+$stock = 800;
+
+if ( $stock > 0 ) {
+    echo "Hay stock";
+} else {
+    echo "No hay stock";
+}
+
+// Boleanos
+
+$stock = 800;
+$venta = 1;
+
+if ( $venta ) {
+    $stock--;
+}
+
+echo $stock;
+
+*/
+
+// Actividad
+
+$valor = rand(1, 5);
+
+if ( $valor == 1 || $valor == 3 || $valor == 5 ) {    
+    echo "El numero $valor es impar";
+} else {
+    echo "El numero $valor es par";
+}
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+</head>
+<body>
+    
+</body>
+</html>
