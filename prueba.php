@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /*
 $aAgenda = array(); //
 $aAgenda[0] = array(); //Dias-primera-fila
@@ -57,7 +61,6 @@ $num2 = 10;
 
 echo "El numero de \$num1 es $num1"; // Contra barra => \\
 
-
 // Operadores logicos
 
 // Control de flujo => Condicional True or False
@@ -80,17 +83,7 @@ if ( $edad >= 18 ) {
     echo "Es menor de edad";
 }
 
-// Actividad
-
-$stock = 800;
-
-if ( $stock > 0 ) {
-    echo "Hay stock";
-} else {
-    echo "No hay stock";
-}
-
-// Boleanos
+// Booleanos
 
 $stock = 800;
 $venta = 1;
@@ -101,17 +94,18 @@ if ( $venta ) {
 
 echo $stock;
 
-*/
+// Bucle
 
-// Actividad
+$stock  = 20;
 
-$valor = rand(1, 5);
-
-if ( $valor == 1 || $valor == 3 || $valor == 5 ) {    
-    echo "El numero $valor es impar";
-} else {
-    echo "El numero $valor es par";
+while ( $stock > 0 ){
+    echo "El stock es $stock <br>";
+    $stock--;
 }
+
+echo "Stock agotado";
+
+*/
 
 ?>
 <!DOCTYPE html>
