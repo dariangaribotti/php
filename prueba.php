@@ -107,6 +107,8 @@ echo "Stock agotado";
 
 */
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
