@@ -105,9 +105,23 @@ while ( $stock > 0 ){
 
 echo "Stock agotado";
 
+// funciones
+
+function unir($cadena1, $cadena2){
+    return "$cadena1 $cadena2"; 
+}
+
+$resultado = unir("El libro viejo", "El nuevo mundo");
+
+echo $resultado;
+
 */
 
+function saludar($nombre, $apellido = ""){
+    return "Hola mi nombre es $nombre $apellido";
+}
 
+echo saludar("Ricardo", "Moralez");
 
 ?>
 <!DOCTYPE html>
