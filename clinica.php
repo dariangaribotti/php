@@ -40,13 +40,14 @@ $aPacientes[] = array(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script async src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
     <title>Clínica</title>
 </head>
 <body>
     <main class="container">
         <div class="row">
             <div class="col-12 py-5 text-center">
-                <h1>Listado de pacientes</h1>
+                <h1>Listado de chicos</h1>
             </div>
         </div>
         <div class="row">
