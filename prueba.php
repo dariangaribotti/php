@@ -115,13 +115,37 @@ $resultado = unir("El libro viejo", "El nuevo mundo");
 
 echo $resultado;
 
-*/
-
 function saludar($nombre, $apellido = ""){
     return "Hola mi nombre es $nombre $apellido";
 }
 
 echo saludar("Ricardo", "Moralez");
+
+
+
+// Ámbito local y Ámbito global
+// Mala practica
+
+$bruto = 7000; // Ámbito global
+
+function calcularNeto(){ //Aca no esta bien, seria mejor ponerlo como parámetro.
+    global $bruto; // Ámbito local
+    return $bruto - $bruto * 0.17;
+}
+
+echo calcularNeto();
+
+// Buena practica
+
+$bruto = 2000;
+
+function calcularNeto($bruto){ // Lo puse como parámetros.
+    return $bruto - $bruto * 0.17;
+}
+
+echo calcularNeto($bruto);
+
+*/
 
 ?>
 <!DOCTYPE html>
