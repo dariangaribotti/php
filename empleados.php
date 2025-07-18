@@ -8,29 +8,29 @@ $aEmpleados = array();
 $aEmpleados[] = array(
     "dni" => "33300123",
     "nombre" => "david garcia",
-    "bruto" => "70.550,25"
+    "bruto" => 85000.30
 );
 
 $aEmpleados[] = array(
     "dni" => "40874456",
     "nombre" => "ana del valle",
-    "bruto" => "74.700,00"
+    "bruto" => 90000
 );
 
 $aEmpleados[] = array(
     "dni" => "67567565",
     "nombre" => "andres perez",
-    "bruto" => "70.550,25"
+    "bruto" => 100000
 );
 
 $aEmpleados[] = array(
     "dni" => "75744545",
     "nombre" => "victoria luz",
-    "bruto" => "58.100,00"
+    "bruto" => 70000
 );
 
-foreach ($aEmpleados as $indice => $empleado) {
-    $aEmpleados[$indice]["nombre"] = mb_strtoupper($empleado["nombre"], 'UTF-8');
+function calcularNeto($bruto){
+    return $bruto - ($bruto * 0.17);
 }
 
 ?>
@@ -61,18 +61,23 @@ foreach ($aEmpleados as $indice => $empleado) {
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($aEmpleados as $Empleado){
+                        foreach ($aEmpleados as $empleado){
                         ?>
                         <tr>
-                            <td><?php echo $Empleado["dni"]; ?></td>
-                            <td><?php echo $Empleado["nombre"]; ?></td>
-                            <td><?php echo $Empleado["bruto"]; ?></td>
+                            <td><?php echo $empleado["dni"]; ?></td>
+                            <td><?php echo mb_strtoupper($empleado["nombre"]); ?></td>
+                            <td><?php echo "$" . number_format(calcularNeto($empleado["bruto"]), 2 , "," , "."); ?></td>
                         </tr>
                         <?php  
                         } 
                         ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p><?php echo "Cantidad de empleados activos: " . count($aEmpleados); ?></p>
+                </div>
             </div>
         </div>
     </main>
