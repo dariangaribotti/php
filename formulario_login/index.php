@@ -6,10 +6,10 @@ error_reporting(E_ALL);
 
 if($_POST){
 
-    $nombre = $_POST["txtNombre"];
-    $contraseña = $_POST["txtClave"];
+    $nombre = $_REQUEST["txtNombre"];
+    $contraseña = $_REQUEST["txtClave"];
 
-    if($nombre == "admin" && $contraseña == "123456"){
+    if($nombre != "" && $contraseña != ""){
         header("Location: acceso-confirmado.php");
     }
     else {
@@ -19,7 +19,7 @@ if($_POST){
 
 ?>
 <!DOCTYPE html>
-<html lang="es" class="h-100" data-bs-theme="light">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,19 +34,19 @@ if($_POST){
                 <div class="py-2 pt-5">
                     <h3>iniciar sesión</h3>
                 </div>
-                <?php if(isset($msg)) { ?>
+                <?php if(isset($msg)): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?php echo $msg ?>
+                        <?php echo $msg; ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                <?php } ?>
+                <?php endif; ?>
                 <form action="" method="POST">
                     <div class="pb-3">
-                        <label for="txtNombre">Nombre</label>
+                        <label for="txtNombre">Nombre: </label>
                         <input type="text" name="txtNombre" id="txtNombre" class="form-control">
                     </div>
                     <div class="pb-3">
-                        <label for="txtClave">Password</label>
+                        <label for="txtClave">Password: </label>
                         <input type="password" name="txtClave" id="txtClave" class="form-control">
                     </div>
                     <div>
