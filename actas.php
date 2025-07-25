@@ -4,38 +4,41 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 $aActas = array();
-$aActas[] = array(
-    "id" => 1,
-    "nombre" => "Juan Perez",
-    "aNotas" => array(9, 8)
-);
-
-$aActas[] = array(
-    "id" => 2,
-    "nombre" => "Ana Valle",
-    "aNotas" => array(4, 9)
-);
-
-$aActas[] = array(
-    "id" => 3,
-    "nombre" => "Gonzalo Roldan",
-    "aNotas" => array(7, 6)
-);
+$aActas[] = array("id" => 1, "nombre" => "Juan Perez", "aNotas" => array(9, 8));
+$aActas[] = array("id" => 2, "nombre" => "Ana Valle", "aNotas" => array(4, 9));
+$aActas[] = array("id" => 3, "nombre" => "Gonzalo Roldan", "aNotas" => array(7, 6));
 
 function promedio($aVector){
     $suma = 0;
-
     foreach ($aVector as $item){
         $suma += $item;
     }
-
-    $cantidad = count($aVector);
-
-    return $suma / $cantidad;
+    return $suma / count($aVector);
 }
 
+// Preparamos los datos antes de mostrar
+$promedios = [];        // array para guardar cada promedio individual
+$totalNotas = 0;
+$cantidadNotas = 0;
+
+// Recorremos alumnos para calcular sus promedios y preparar datos para la vista
+foreach($aActas as $acta){
+    $prom = promedio($acta["aNotas"]);
+    $promedios[] = $prom;
+
+    // Sumamos todas las notas para el promedio general
+    foreach ($acta["aNotas"] as $nota) {
+        $totalNotas += $nota;
+        $cantidadNotas++;
+    }
+}
+
+// Promedio del curso
+$promedioCurso = $totalNotas / $cantidadNotas;
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -64,15 +67,15 @@ function promedio($aVector){
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        foreach( $aActas as $acta ): 
+                        <?php
+                        foreach( $aActas as $acta ):
                         ?>
                         <tr>
                             <td><?php echo $acta["id"]; ?></td>
                             <td><?php echo $acta["nombre"]; ?></td>
                             <td><?php echo $acta["aNotas"][0]; ?></td>
                             <td><?php echo $acta["aNotas"][1]; ?></td>
-                            <td><?php echo promedio($acta["aNotas"]); ?></td>
+                            <td><?php echo number_format(promedio($acta["aNotas"]), 2); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -81,7 +84,7 @@ function promedio($aVector){
         </div>
         <div class="row">
             <div class="col-12">
-                <h2>Promedio de la cursada: <?php echo promedio(); ?></h2>
+                <h2>Promedio de la cursada: <?php echo number_format($promedioCurso, 2); ?></h2>
             </div>
         </div>
     </main>
