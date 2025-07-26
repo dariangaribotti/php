@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -10,43 +10,26 @@ $aActas[] = array("id" => 1, "nombre" => "Juan Perez", "aNotas" => array(9, 8));
 $aActas[] = array("id" => 2, "nombre" => "Ana Valle", "aNotas" => array(4, 9));
 $aActas[] = array("id" => 3, "nombre" => "Gonzalo Roldan", "aNotas" => array(7, 6));
 
-function promedio($aVector){
+function promedio($aVector)
+{
     $suma = 0;
-    foreach ($aVector as $item){
+    foreach ($aVector as $item) {
         $suma += $item;
     }
     return $suma / count($aVector);
 }
 
-// Preparamos los datos antes de mostrar
-$promedios = [];        // array para guardar cada promedio individual
-$totalNotas = 0;
-$cantidadNotas = 0;
-
-// Recorremos alumnos para calcular sus promedios y preparar datos para la vista
-foreach($aActas as $acta){
-    $prom = promedio($acta["aNotas"]);
-    $promedios[] = $prom;
-
-    // Sumamos todas las notas para el promedio general
-    foreach ($acta["aNotas"] as $nota) {
-        $totalNotas += $nota;
-        $cantidadNotas++;
-    }
-}
-
-// Promedio del curso
-$promedioCurso = $totalNotas / $cantidadNotas;
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <title>Actas</title>
 </head>
+
 <body>
     <main class="container">
         <div class="row">
@@ -68,16 +51,34 @@ $promedioCurso = $totalNotas / $cantidadNotas;
                     </thead>
                     <tbody>
                         <?php
-                        foreach( $aActas as $acta ):
+                        $totalNotas = 0;       // Guarda la suma de todas las notas del curso
+                        $cantidadNotas = 0;    // Guarda cuántas notas hay en total
+
+                        foreach ($aActas as $acta):  // Recorremos cada alumno
+
+                            $prom = promedio($acta["aNotas"]);  // Calculamos el promedio del alumno
+
+                            // Multiplicamos el promedio por la cantidad de notas (para obtener la suma original)
+                            // Ejemplo: promedio = 7, cantidad = 2 → 7 * 2 = 14 (que es 8 + 6)
+                            $totalNotas += $prom * count($acta["aNotas"]);
+
+                            // Sumamos cuántas notas tiene este alumno
+                            $cantidadNotas += count($acta["aNotas"]);
+
+                            $promedioCurso = $totalNotas / $cantidadNotas;  // Suma total dividido la cantidad total
+
                         ?>
-                        <tr>
-                            <td><?php echo $acta["id"]; ?></td>
-                            <td><?php echo $acta["nombre"]; ?></td>
-                            <td><?php echo $acta["aNotas"][0]; ?></td>
-                            <td><?php echo $acta["aNotas"][1]; ?></td>
-                            <td><?php echo number_format(promedio($acta["aNotas"]), 2); ?></td>
-                        </tr>
+
+                            <tr>
+                                <td><?php echo $acta["id"]; ?></td> // Mostramos el ID
+                                <td><?php echo $acta["nombre"]; ?></td> // Mostramos el nombre
+                                <td><?php echo $acta["aNotas"][0]; ?></td> // Mostramos la primera nota
+                                <td><?php echo $acta["aNotas"][1]; ?></td> // Mostramos la segunda nota
+                                <td><?php echo number_format($prom, 2); ?></td> // Mostramos el promedio con 2 decimales
+                            </tr>
+
                         <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
@@ -89,4 +90,5 @@ $promedioCurso = $totalNotas / $cantidadNotas;
         </div>
     </main>
 </body>
+
 </html>
