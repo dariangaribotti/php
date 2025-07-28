@@ -19,10 +19,6 @@ function promedio($aVector) {
     return $suma / count($aVector);
 }
 
-function subPromedio($aVector){
-
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -53,7 +49,19 @@ function subPromedio($aVector){
                     </thead>
                     <tbody>
                         <?php 
+                        $totalVentas = 0;
+                        $cantidadVentas = 0;
+                        
                         foreach ( $aVentas as $venta ):
+                        
+                        $prom = promedio($venta["aVentas"]);
+                        
+                        $totalVentas += $prom * count($venta["aVentas"]);
+                        
+                        $cantidadVentas += count($venta["aVentas"]);
+
+                        $totalPromedio = $totalVentas / $cantidadVentas;
+
                         ?>
                         <tr>
                             <td><?php echo $venta["id"] ?></td>
@@ -69,7 +77,7 @@ function subPromedio($aVector){
         </div>
         <div class="row">
             <div class="col-12">
-                <h2>El promedio total es: <?php ?></h2>
+                <h2>El promedio total es: <?php echo number_format($totalPromedio, 2); ?></h2>
             </div>
         </div>
     </main>

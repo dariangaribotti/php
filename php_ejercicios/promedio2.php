@@ -4,7 +4,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$aMateria = array();
+$aMateria[] = array("id" => "1", "nombre" => "Matematica", "aNotas" => array(7, 8));
+$aMateria[] = array("id" => "2", "nombre" => "Lengua", "aNotas" => array(6, 9));
+$aMateria[] = array("id" => "3", "nombre" => "Historia", "aNotas" => array(8, 10));
 
+function promediar($aVector){
+    $suma = 0;
+    foreach($aVector as $item){
+        $suma += $item;
+    }
+    return $suma / count($aVector);
+}
 
 ?>
 <!DOCTYPE html>
@@ -35,11 +46,39 @@ error_reporting(E_ALL);
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+
+                        $cantidadTotal = 0;
+                        $cantidadNotas = 0;
+
+                        foreach($aMateria as $materia):
+
+                        $prom = promediar($materia["aNotas"]);
+
+                        $cantidadNotas += $prom * count($materia["aNotas"]);
+
+                        $cantidadTotal += count($materia["aNotas"]);
+
+                        $Promedio = $cantidadTotal / $cantidadNotas;
+                        
+                        ?>
                         <tr>
-                            <td><?php ?></td>
+                            <td><?php echo $materia["id"]; ?></td>
+                            <td><?php echo $materia["nombre"]; ?></td>
+                            <td><?php echo $materia["aNotas"][0]; ?></td>
+                            <td><?php echo $materia["aNotas"][1]; ?></td>
+                            <td><?php echo promediar($materia["aNotas"]); ?></td>
                         </tr>
+                        <?php 
+                        endforeach;
+                        ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h2>El promedio es: <?php echo $Promedio; ?></h2>
             </div>
         </div>
     </main>
