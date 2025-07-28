@@ -4,7 +4,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$aProductos = array();
+$aProductos[] = array("id" => "11","nombre" => "Notebook", "precio" => array(95000, 97000));
+$aProductos[] = array("id" => "12","nombre" => "Tablet", "precio" => array(50000, 52000));
+$aProductos[] = array("id" => "13","nombre" => "Monitor", "precio" => array(30000, 29500));
 
+function promedio($aVector){
+    $suma = 0;
+    foreach ($aVector as $item){
+        $suma += $item;
+    }
+    return $suma / count($aVector);
+}
 
 ?>
 <!DOCTYPE html>
@@ -35,11 +46,37 @@ error_reporting(E_ALL);
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+
+                        $cantidadTotal = 0;
+                        $cantidadVentas = 0;
+
+                        foreach($aProductos as $producto):
+
+                        $prom = promedio($producto["precio"]);
+
+                        $cantidadTotal += $prom * count($producto["precio"]);
+
+                        $cantidadVentas += count($producto["precio"]);
+
+                        $promedioTotal = $cantidadTotal / $cantidadVentas;
+                        
+                        ?>
                         <tr>
-                            <td><?php ?></td>
+                            <td><?php echo $producto["id"]; ?></td>
+                            <td><?php echo $producto["nombre"]; ?></td>
+                            <td><?php echo $producto["precio"][0]; ?></td>
+                            <td><?php echo $producto["precio"][1]; ?></td>
+                            <td><?php echo number_format(promedio($producto["precio"]), 2); ?></td>
                         </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h1>El promedio es: <?php echo number_format($promedioTotal, 2) ?></h1>
             </div>
         </div>
     </main>
