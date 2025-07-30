@@ -29,6 +29,18 @@ if ($_POST){
 
         $_SESSION["listadoClientes"] = $aClientes;
     }
+
+    if(isset($_POST["btnEliminar"])){
+        $aClientes = array();
+        $_SESSION["listadoClientes"] = array();
+    }
+}
+
+if(isset($_GET["pos"])){
+    $pos = $_GET["pos"];
+    unset($aClientes[$pos]);
+    $_SESSION["listadoClientes"] = $aClientes;
+    header("Location: clientes_session.php");
 }
 
 ?>
@@ -37,6 +49,7 @@ if ($_POST){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <title>Listado de clientes</title>
 </head>
@@ -80,16 +93,18 @@ if ($_POST){
                             <th>DNI:</th>
                             <th>Telefono:</th>
                             <th>Edad:</th>
+                            <th>Acciones:</th>
                         </thead>
                         <tbody>
                             <?php 
-                            foreach ($aClientes as $cliente):
+                            foreach ($aClientes as $pos => $cliente):
                             ?>
                             <tr>
                                 <td><?php echo $cliente["nombre"]; ?></td>
                                 <td><?php echo $cliente["dni"]; ?></td>
                                 <td><?php echo $cliente["telefono"]; ?></td>
                                 <td><?php echo $cliente["edad"]; ?></td>
+                                <td><a href="clientes_session.php?pos=<?php echo $pos; ?>"><i class="bi bi-trash"></i></a></td>
                             </tr>
                             <?php
                             endforeach;
