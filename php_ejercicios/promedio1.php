@@ -4,16 +4,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$aVentas = array();
-$aVentas[] = array("id" => 101, "nombre" => "Lucia Diaz", "aVentas" => array(2000, 3200));
-$aVentas[] = array("id" => 102, "nombre" => "Marcos Leon", "aVentas" => array(1500, 1800));
-$aVentas[] = array("id" => 103, "nombre" => "Nina Suarez", "aVentas" => array(5000, 4100));
+$aChocolates = array();
+$aChocolates[] = array("id" => 401, "nombre" => "Caja Trufas", "aChoco" => array(120, 150));
+$aChocolates[] = array("id" => 402, "nombre" => "Tableta Amargo", "aChoco" => array(200, 180));
+$aChocolates[] = array("id" => 403, "nombre" => "Bombones Rellenos", "aChoco" => array(90, 110));
 
-function promedio($aVector) {
+function promediar($aVector){
+
     $suma = 0;
 
-    foreach ( $aVector as $item){
-        $suma = $suma + $item;
+    foreach($aVector as $item){
+        $suma += $item;
     }
 
     return $suma / count($aVector);
@@ -49,26 +50,28 @@ function promedio($aVector) {
                     </thead>
                     <tbody>
                         <?php 
-                        $totalVentas = 0;
-                        $cantidadVentas = 0;
-                        
-                        foreach ( $aVentas as $venta ):
-                        
-                        $prom = promedio($venta["aVentas"]);
-                        
-                        $totalVentas += $prom * count($venta["aVentas"]);
-                        
-                        $cantidadVentas += count($venta["aVentas"]);
 
-                        $totalPromedio = $totalVentas / $cantidadVentas;
+                        $cantidadChoco = 0;
+                        $totalChoco = 0;
 
+                        foreach($aChocolates as $chocolate):
+                        
+                        $prom = promediar($chocolate["aChoco"]);
+
+                        $totalChoco += $prom * count($chocolate["aChoco"]);
+
+                        $cantidadChoco += count($chocolate["aChoco"]);
+
+                        $promedio = $totalChoco / $cantidadChoco;
+
+                        
                         ?>
                         <tr>
-                            <td><?php echo $venta["id"] ?></td>
-                            <td><?php echo $venta["nombre"] ?></td>
-                            <td><?php echo $venta["aVentas"][0] ?></td>
-                            <td><?php echo $venta["aVentas"][1] ?></td>
-                            <td><?php echo number_format(promedio($venta["aVentas"]), 2); ?></td>
+                            <td><?php echo $chocolate["id"]; ?></td>
+                            <td><?php echo $chocolate["nombre"]; ?></td>
+                            <td><?php echo $chocolate["aChoco"][0]; ?></td>
+                            <td><?php echo $chocolate["aChoco"][1]; ?></td>
+                            <td><?php echo number_format(promediar($chocolate["aChoco"]), 2); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -77,7 +80,7 @@ function promedio($aVector) {
         </div>
         <div class="row">
             <div class="col-12">
-                <h2>El promedio total es: <?php echo number_format($totalPromedio, 2); ?></h2>
+                <h2>El promedio total es: <?php echo number_format(($promedio), 2); ?></h2>
             </div>
         </div>
     </main>
