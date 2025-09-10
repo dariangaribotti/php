@@ -4,13 +4,45 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+session_start();
+
+if(isset($_SESSION["listadoVehiculos"])){
+    $aVehiculos = $_SESSION["listadoVehiculos"];
+} else {
+    $aVehiculos = array();
+}
+
 if($_POST){
+    
+    if(isset($_POST["btnEnviar"])){
 
-    $patente = $_POST["txtPatente"];
-    $marca = $_POST["txtMarca"];
-    $modelo = $_POST["txtModelo"];
-    $año = $_POST["txtAño"];
+        $patente = $_POST["txtPatente"];
+        $marca = $_POST["txtMarca"];
+        $modelo = $_POST["txtModelo"];
+        $año = $_POST["txtAño"];
 
+        $aVehiculos[] = array(
+            "patente" => $patente,
+            "marca" => $marca,
+            "modelo" => $modelo,
+            "año" => $año
+        );
+
+        $_SESSION["listadoVehiculos"] = $aVehiculos;
+
+    }
+
+    if(isset($_POST["btnEliminar"])){
+        $_SESSION["listadoVehiculos"] = array();
+        $aVehiculos = array();
+    }
+}
+
+if(isset($_GET["pos"])){
+    $pos = $_GET["pos"];
+    unset($aVehiculos[$pos]);
+    $_SESSION["listadoVehiculos"] = $aVehiculos;
+    header("Location: session1.php");
 }
 
 ?>
@@ -57,17 +89,29 @@ if($_POST){
             </div>
             <div class="col-6 pt-4">
                 <table class="table table-hover border">
-                    <tr>
                         <thead>
-                            <th>Patente:</th>
-                            <th>Marca:</th>
-                            <th>Modelo:</th>
-                            <th>Año:</th>
+                            <tr>
+                                <th>Patente:</th>
+                                <th>Marca:</th>
+                                <th>Modelo:</th>
+                                <th>Año:</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <td><?php ?></td>
+                        <?php 
+                        foreach($aVehiculos as $pos => $vehiculo):
+                        ?>
+                        <tr>
+                            <td><?php echo $vehiculo["patente"]; ?></td>
+                            <td><?php echo $vehiculo["marca"]; ?></td>
+                            <td><?php echo $vehiculo["modelo"]; ?></td>
+                            <td><?php echo $vehiculo["año"]; ?></td>
+                            <td><a href="session1.php?pos=<?php echo $pos; ?>"><i class="bi bi-trash"></i></a></td>
+                         </tr>
+                        <?php 
+                        endforeach;
+                        ?>
                         </tbody>
-                    </tr>
                 </table>
             </div>
         </div>
