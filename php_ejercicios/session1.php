@@ -102,7 +102,7 @@ if(isset($_GET["pos"])){
                         foreach($aVehiculos as $pos => $vehiculo):
                         ?>
                         <tr>
-                            <td><?php echo $vehiculo["patente"]; ?></td>
+                            <td><?php echo $vehiculo["patente"]; ?></td> 
                             <td><?php echo $vehiculo["marca"]; ?></td>
                             <td><?php echo $vehiculo["modelo"]; ?></td>
                             <td><?php echo $vehiculo["año"]; ?></td>
