@@ -4,6 +4,40 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+if(file_exists("archivo.txt")){ //Preguntar si existe el archivo
+    $jsonClientes = file_get_contents("archivo.txt"); //Vamos a leerlo y almacenamos el contenido en jsonClientes
+    $aClientes = json_decode($jsonClientes, true); //Convertir jsonClientes en un array llamado aClientes
+} else { //Si no existe el archivo
+    $aClientes = array(); //Creamos un aClientes inicializado como un array vació.
+}
+
+if(isset($_POST["btnEnviar"])){
+    $documento = trim($_POST["txtDocumento"]);
+    $nombre = trim($_POST["txtNombre"]);
+    $telefono = trim($_POST["txtTelefono"]);
+    $correo = trim($_POST["txtCorreo"]);
+
+    $aClientes[] = array(
+        "documento" => $documento,
+        "nombre" => $nombre,
+        "telefono" => $telefono,
+        "correo" => $correo,
+    );
+
+    //Convertir el array de aClientes a json, la variable se llama jsonClientes.
+    $jsonClientes = json_encode($aClientes);
+
+    //Almacenar el string jsonClientes en el archivo.txt
+    $storage = file_put_contents("archivo.txt", $jsonClientes);
+
+}
+
+if(isset($_POST["btnEliminar"])){
+    $aClientes = array();
+    file_put_contents("archivo.txt", $aClientes);
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,6 +47,7 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/fontawesome/css/fontawesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Clientes</title>
 </head>
 <body>
@@ -47,8 +82,8 @@ error_reporting(E_ALL);
                         <small class="d-block">Archivos admitidos: .jpg .jpeg, .png</small>
                     </div>
                     <div class="py-2">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" name="btnEnviar" class="btn btn-primary">Guardar</button>
+                        <button type="submit" name="btnEliminar" class="btn btn-danger">Eliminar</button>
                     </div>
                 </form>
             </div>
@@ -64,9 +99,18 @@ error_reporting(E_ALL);
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach($aClientes as $pos => $cliente): ?>
                         <tr>
                             <td></td>
+                            <td><?php echo $cliente["documento"]; ?></td>
+                            <td><?php echo $cliente["nombre"]; ?></td>
+                            <td><?php echo $cliente["correo"]; ?></td>
+                            <td>
+                                <a href=""><i class="bi bi-pencil-fill"></i></a>
+                                <a href="index.php?pos=<?php echo $pos; ?>"><i class="bi bi-trash3"></i></a>
+                            </td>
                         </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
