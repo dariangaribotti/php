@@ -11,18 +11,32 @@ if(file_exists("archivo.txt")){ //Preguntar si existe el archivo
     $aClientes = array(); //Creamos un aClientes inicializado como un array vació.
 }
 
+$pos = isset($_GET["pos"]) && $_GET["pos"] >= 0? $_GET["pos"]:""; //Importante poner esto arriba de la logica
+
 if(isset($_POST["btnEnviar"])){
     $documento = trim($_POST["txtDocumento"]);
     $nombre = trim($_POST["txtNombre"]);
     $telefono = trim($_POST["txtTelefono"]);
     $correo = trim($_POST["txtCorreo"]);
 
-    $aClientes[] = array(
+    if($pos>=0){ //Editar
+        $aClientes[$pos] = array(
         "documento" => $documento,
         "nombre" => $nombre,
         "telefono" => $telefono,
         "correo" => $correo,
-    );
+        );
+
+    } else { //Insertar
+        $aClientes[] = array(
+        "documento" => $documento,
+        "nombre" => $nombre,
+        "telefono" => $telefono,
+        "correo" => $correo,
+        );
+    }
+
+
 
     //Convertir el array de aClientes a json, la variable se llama jsonClientes.
     $jsonClientes = json_encode($aClientes);
@@ -32,10 +46,20 @@ if(isset($_POST["btnEnviar"])){
 
 }
 
-if(isset($_POST["btnEliminar"])){
-    $aClientes = array();
-    file_put_contents("archivo.txt", $aClientes);
+if(isset($_GET["do"]) && $_GET["do"] == "editar"){
+    
 }
+
+if(isset($_GET["do"]) && $_GET["do"] == "eliminar"){
+    //Eliminar del array aClientes la posición a borrar unset()
+    unset($aClientes[$pos]);
+    //Convertir el array en json
+    $convert = json_encode($aClientes);
+    //Almacenar el json en el archivo
+    file_put_contents("archivo.txt", $convert);
+    header("location: index.php");
+}
+
 
 
 ?>
@@ -62,19 +86,19 @@ if(isset($_POST["btnEliminar"])){
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div>
                         <label for="txtDocumento">DNI: *</label>
-                        <input type="text" name="txtDocumento" id="txtDocumento" class="form-control" required>
+                        <input type="text" name="txtDocumento" id="txtDocumento" class="form-control" required value="<?php echo isset($aClientes[$pos]) ? $aClientes[$pos]["documento"]: ""; ?>">
                     </div>
                     <div class="py-2">
                         <label for="txtNombre">Nombre: *</label>
-                        <input type="text" name="txtNombre" id="txtNombre" class="form-control" required>
+                        <input type="text" name="txtNombre" id="txtNombre" class="form-control" required value="<?php echo isset($aClientes[$pos]) ? $aClientes[$pos]["nombre"]: ""; ?>">
                     </div>
                     <div class="py-2">
                         <label for="txtTelefono">Telefono: *</label>
-                        <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" required>
+                        <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" required value="<?php echo isset($aClientes[$pos]) ? $aClientes[$pos]["telefono"]: ""; ?>">
                     </div>
                     <div class="pt-2">
                         <label for="txtCorreo">Correo: *</label>
-                        <input type="text" name="txtCorreo" id="txtCorreo" class="form-control" required>
+                        <input type="text" name="txtCorreo" id="txtCorreo" class="form-control" required value="<?php echo isset($aClientes[$pos]) ? $aClientes[$pos]["correo"]: ""; ?>">
                     </div>
                     <div>
                         <label for="archivo1">Archivo adjunto</label>
@@ -83,7 +107,7 @@ if(isset($_POST["btnEliminar"])){
                     </div>
                     <div class="py-2">
                         <button type="submit" name="btnEnviar" class="btn btn-primary">Guardar</button>
-                        <button type="submit" name="btnEliminar" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" name="btnEliminar" class="btn btn-danger">Nuevo</button>
                     </div>
                 </form>
             </div>
@@ -106,8 +130,8 @@ if(isset($_POST["btnEliminar"])){
                             <td><?php echo $cliente["nombre"]; ?></td>
                             <td><?php echo $cliente["correo"]; ?></td>
                             <td>
-                                <a href=""><i class="bi bi-pencil-fill"></i></a>
-                                <a href="index.php?pos=<?php echo $pos; ?>"><i class="bi bi-trash3"></i></a>
+                                <a href="index.php?pos=<?php echo $pos; ?>&do=editar"><i class="bi bi-pencil-fill"></i></a>
+                                <a href="index.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="bi bi-trash3"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
