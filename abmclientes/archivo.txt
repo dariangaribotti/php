@@ -1,1 +1,1 @@
-[]
+[{"documento":"123","nombre":"20251003121019051227","telefono":"123","correo":"123","imagen":""},{"documento":"123","nombre":"20251003121023051550","telefono":"123","correo":"123","imagen":"20251003121023051550.png"}]
