@@ -13,14 +13,34 @@ if(file_exists("archivo.txt")){ //Preguntar si existe el archivo
 
 $pos = isset($_GET["pos"]) && $_GET["pos"] >= 0? $_GET["pos"]:""; //Importante poner esto arriba de la lógica
 
-if(isset($_POST["btnEnviar"])){
-    $documento = trim($_POST["txtDocumento"]);
+if(isset($_POST["btnEnviar"])){ 
+    //primero se define
+
+    $documento = trim($_POST["txtDocumento"]); 
     $nombre = trim($_POST["txtNombre"]);
     $telefono = trim($_POST["txtTelefono"]);
     $correo = trim($_POST["txtCorreo"]);
     $nombreImagen = "";
 
     if($pos>=0){ //Editar
+
+        if($_FILES["archivo1"]["error"] === UPLOAD_ERR_OK){
+            $nombre = date("Ymdhmsi") . rand(1000, 2000); 
+            $archivo_tmp = $_FILES["archivo1"]["tmp_name"];
+            $extension = pathinfo($_FILES["archivo1"]["name"], PATHINFO_EXTENSION);
+            if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
+                $nombreImagen = "$nombre.$extension";
+                move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+            }
+            //Eliminar la imagen anterior
+            if($aClientes[$pos]["imagen"] != "" && file_exists("imagenes/".$aClientes[$pos]["imagen"])){
+                unlink("imagenes/".$aClientes[$pos]["imagen"]);
+            } else {
+            //Mantener la imagenAnterior que ya estaba guardada
+                $nombreImagen = $aClientes[$pos]["imagen"];
+            }
+        }
+        
         $aClientes[$pos] = array(
         "documento" => $documento,
         "nombre" => $nombre,
@@ -31,14 +51,18 @@ if(isset($_POST["btnEnviar"])){
         
     } else { //Insertar
 
-        $nombre = date("Ymdhmsi") . rand(1000, 2000);
-        $archivo_tmp = $_FILES["archivo1"]["tmp_name"];
-        $extension = pathinfo($_FILES["archivo1"]["name"], PATHINFO_EXTENSION);
-        if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
-            $nombreImagen = "$nombre.$extension";
-            move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+        //segundo se asigna
+        if($_FILES["archivo1"]["error"] === UPLOAD_ERR_OK){
+            $nombre = date("Ymdhmsi") . rand(1000, 2000); 
+            $archivo_tmp = $_FILES["archivo1"]["tmp_name"];
+            $extension = pathinfo($_FILES["archivo1"]["name"], PATHINFO_EXTENSION);
+            if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
+                $nombreImagen = "$nombre.$extension";
+                move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+            }
         }
 
+        //tercero se almacena
         $aClientes[] = array(
         "documento" => $documento,
         "nombre" => $nombre,
@@ -49,7 +73,7 @@ if(isset($_POST["btnEnviar"])){
     }
 
     //Convertir el array de aClientes a json, la variable se llama jsonClientes.
-    $jsonClientes = json_encode($aClientes);
+    $jsonClientes = json_encode($aClientes); //Json es una cadena de caracteres, por eso tenemos que almacenarlos en un archivo.txt-
 
     //Almacenar el string jsonClientes en el archivo.txt
     $storage = file_put_contents("archivo.txt", $jsonClientes);
