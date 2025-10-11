@@ -79,10 +79,6 @@ if(isset($_POST["btnEnviar"])){
     $storage = file_put_contents("archivo.txt", $jsonClientes);
 }
 
-if(isset($_GET["do"]) && $_GET["do"] == "editar"){
-    
-}
-
 if(isset($_GET["do"]) && $_GET["do"] == "eliminar"){
     //Eliminar del array aClientes la posición a borrar unset()
     unset($aClientes[$pos]);

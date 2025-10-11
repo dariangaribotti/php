@@ -13,6 +13,8 @@ if(file_exists("archivo.txt")){
     $aGestor = array();
 }
 
+$pos = isset($_GET["pos"]) && $_GET["pos"] >=0? $_GET["pos"] : "";
+
 if($_POST){
     if(isset($_POST["btnEnviar"])){
 
@@ -22,20 +24,38 @@ if($_POST){
         $titulo = $_POST["txtTitulo"];
         $descripcion = $_POST["txtDescripcion"];
 
-        $aGestor[] = array(
+        if($pos>=0){ // Editar
+
+            $aGestor[$pos] = array(
             "prioridad" => $prioridad,
             "usuario" => $usuario,
             "estado" => $estado,
             "titulo" => $titulo,
             "descripcion" => $descripcion
         );
+        } else {
+            
+            $aGestor[] = array(
+            "prioridad" => $prioridad,
+            "usuario" => $usuario,
+            "estado" => $estado,
+            "titulo" => $titulo,
+            "descripcion" => $descripcion
+        );
+        }
 
-        $jsonGestor = json_encode($aGestor);
-        $storage = file_put_contents("archivo.txt", $jsonGestor);
     }
+
+    $jsonGestor = json_encode($aGestor);
+    $storage = file_put_contents("archivo.txt", $jsonGestor);
 }
 
-print_r($_POST);
+if(isset($_GET["do"]) && $_GET["do"] == "eliminar" ){
+    unset($aGestor[$pos]);
+    $convert = json_encode($aGestor);
+    file_put_contents("archivo.txt", $convert);
+    header("location: index.php");
+}
 
 ?>
 <!DOCTYPE html>
@@ -123,7 +143,7 @@ print_r($_POST);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($aGestor as $gestor): ?>
+                        <?php foreach($aGestor as $pos => $gestor): ?>
                         <tr>
                             <td></td>
                             <td><?php echo date("d/m/Y"); ?></td>
@@ -132,8 +152,8 @@ print_r($_POST);
                             <td><?php echo $gestor["usuario"]; ?></td>
                             <td><?php echo $gestor["estado"]; ?></td>
                             <td>
-                                <a href=""><i class="bi bi-pencil btn btn-secondary"></i></a>
-                                <a href=""><i class="bi bi-trash3 btn btn-danger"></i></a>
+                                <a href="index.php?pos=<?php echo $pos; ?>&do=editar"><i class="bi bi-pencil btn btn-secondary"></i></a>
+                                <a href="index.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="bi bi-trash3 btn btn-danger"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
