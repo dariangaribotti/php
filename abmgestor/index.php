@@ -13,7 +13,13 @@ if(file_exists("archivo.txt")){
     $aGestor = array();
 }
 
-$pos = isset($_GET["pos"]) && $_GET["pos"] >=0? $_GET["pos"] : ""; // Siempre arriba de la logica
+if(isset($_GET["pos"]) && $_GET["pos"] >= 0){
+    $pos = $_GET["pos"];
+} else {
+    $pos = "";
+}
+
+//$pos = isset($_GET["pos"]) && $_GET["pos"] >=0? $_GET["pos"] : ""; // Siempre arriba de la logica
 
 if(isset($_POST["btnEnviar"])){
 
@@ -26,6 +32,7 @@ if(isset($_POST["btnEnviar"])){
     if($pos>=0){ // Editar
 
         $aGestor[$pos] = array(
+        "fecha" => $aGestor[$pos]["fecha"],
         "prioridad" => $prioridad,
         "usuario" => $usuario,
         "estado" => $estado,
@@ -36,6 +43,7 @@ if(isset($_POST["btnEnviar"])){
     } else { // Insertar
         
         $aGestor[] = array(
+        "fecha" => date("d/m/Y"),
         "prioridad" => $prioridad,
         "usuario" => $usuario,
         "estado" => $estado,
@@ -85,31 +93,31 @@ if(isset($_POST["btnCancelar"])){
                     <div class="col-4">
                         <div>
                             <label for="lstPrioridad">Prioridad</label>
-                            <select name="lstPrioridad" id="lstPrioridad" class="form-control" value="<?php echo isset($aGestor[$pos]) ? $aGestor[$pos]["prioridad"] : ""; ?>">
-                                <option value="Alta" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["prioridad"]=="Alta") echo "selected"; ?>>Alta</option>
-                                <option value="Media" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["prioridad"]=="Media") echo "selected"; ?>>Media</option>
-                                <option value="Baja" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["prioridad"]=="Baja") echo "selected"; ?>>Baja</option>
+                            <select name="lstPrioridad" id="lstPrioridad" class="form-control">
+                                <option value="Alta" <?php echo isset($aGestor[$pos]) && $aGestor[$pos]["prioridad"] == "Alta" ? "selected" : ""; ?>>Alta</option>
+                                <option value="Media"<?php echo isset($aGestor[$pos]) && $aGestor[$pos]["prioridad"] == "Media" ? "selected" : ""; ?>>Media</option>
+                                <option value="Baja" <?php echo isset($aGestor[$pos]) && $aGestor[$pos]["prioridad"] == "Baja" ? "selected" : ""; ?>>Baja</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div>
                             <label for="lstUsuario">Usuario</label>
-                            <select name="lstUsuario" id="lstUsuario" class="form-control" value="<?php echo isset($aGestor[$pos]) ? $aGestor[$pos]["usuario"] : ""; ?>">
-                                <option value="Ana" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["usuario"]=="Ana") echo "selected"; ?>>Ana</option>
-                                <option value="Bernabe" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["usuario"]=="Bernabe") echo "selected"; ?>>Bernabe</option>
-                                <option value="Daniela" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["usuario"]=="Daniela") echo "selected"; ?>>Daniela</option>
+                            <select name="lstUsuario" id="lstUsuario" class="form-control">
+                                <option value="Ana"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["usuario"] == "Ana") echo "selected"; ?>>Ana</option>
+                                <option value="Bernabe"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["usuario"] == "Bernabe") echo "selected"; ?>>Bernabe</option>
+                                <option value="Daniela"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["usuario"] == "Daniela") echo "selected"; ?>>Daniela</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div>
                             <label for="lstEstado">Estado</label>
-                            <select name="lstEstado" id="lstEstado" class="form-control" value="">
-                                <option value="Sin" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"]=="Sin") echo "selected"; ?>>Sin asignar</option>
-                                <option value="Asig" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"]=="Asig") echo "selected"; ?>>Asignado</option>
-                                <option value="Proc" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"]=="Proc") echo "selected"; ?>>En proceso</option>
-                                <option value="Term" <?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"]=="Term") echo "selected"; ?>>Terminado</option>
+                            <select name="lstEstado" id="lstEstado" class="form-control">
+                                <option value="Sin"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"] == "Sin") echo "selected"; ?>>Sin asignar</option>
+                                <option value="Asig"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"] == "Asig") echo "selected"; ?>>Asignado</option>
+                                <option value="Proc"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"] == "Proc") echo "selected"; ?>>En proceso</option>
+                                <option value="Term"<?php if(isset($aGestor[$pos]) && $aGestor[$pos]["estado"] == "Term") echo "selected"; ?>>Terminado</option>
                             </select>
                         </div>
                     </div>
@@ -118,7 +126,6 @@ if(isset($_POST["btnCancelar"])){
                 <div class="col-12">
                     <label for="txtTitulo">Titulo</label>
                     <input type="text" name="txtTitulo" id="txtTitulo" class="form-control" value="<?php echo isset($aGestor[$pos]) ? $aGestor[$pos]["titulo"] : ""; ?>">
-                </div>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -133,6 +140,7 @@ if(isset($_POST["btnCancelar"])){
                 </div>
             </div>
         </form>
+        <?php if(count($aGestor)): ?>
         <div class="row">
             <div class="col-12">
                 <table class="table table-hover">
@@ -149,8 +157,8 @@ if(isset($_POST["btnCancelar"])){
                     <tbody>
                         <?php foreach($aGestor as $pos => $gestor): ?>
                         <tr>
-                            <td></td>
-                            <td><?php echo date("d/m/Y"); ?></td>
+                            <td><?php echo $pos; ?></td>
+                            <td><?php echo $gestor["fecha"]; ?></td>
                             <td><?php echo $gestor["titulo"]; ?></td>
                             <td><?php echo $gestor["prioridad"]; ?></td>
                             <td><?php echo $gestor["usuario"]; ?></td>
@@ -165,6 +173,15 @@ if(isset($_POST["btnCancelar"])){
                 </table>
             </div>
         </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        Aun no se han cargado tareas.
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
     </main>
 </body>
 </html>
