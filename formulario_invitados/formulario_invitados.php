@@ -5,8 +5,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if(file_exists("invitados.txt")){
-    $jsonClientes = file_get_contents("invitados.txt");
-    $aInvitados = json_decode($jsonClientes, true);
+    $csvInvitados = fopen("invitados.txt", "r");
+    $aInvitados = fgetcsv($csvInvitados, 0, ",");
 } else {
     $aInvitados = array();
 }
@@ -60,7 +60,7 @@ if(isset($_POST["btnCodigo"])){
             </div>
         </div>
         <?php if($mensajeInvitado != "" || $mensajeCodigo != ""): ?>
-        <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert" name="aviso-eliminar">
+        <div class="alert alert-info" role="alert">
             <?php echo $mensajeInvitado; 
                 echo $mensajeCodigo ?>
         </div>
