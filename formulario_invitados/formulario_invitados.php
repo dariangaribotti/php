@@ -1,0 +1,88 @@
+<?php 
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if(file_exists("invitados.txt")){
+    $jsonClientes = file_get_contents("invitados.txt");
+    $aInvitados = json_decode($jsonClientes, true);
+} else {
+    $aInvitados = array();
+}
+
+$mensajeInvitado = "";
+$mensajeCodigo = "";
+
+if(isset($_POST["btnInvitado"])){
+
+    $documento = $_POST["txtDocumento"];
+
+    if(in_array($documento, $aInvitados)){
+        $mensajeInvitado = "Bienvenid@ a la fiesta!";
+    } else {
+        $mensajeInvitado = "No se encuentra en la lista de invitados";
+    }
+}
+
+if(isset($_POST["btnCodigo"])){
+
+    $codigo = $_POST["txtCodigo"];
+
+    $codigoSecreto = "verde";
+
+    if($codigo == $codigoSecreto){
+        $mensajeCodigo = "Su codigo de acceso es " . rand(5, 4000);
+    } else {
+        $mensajeCodigo = "Ud. no tiene pase VIP";
+    }
+}
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Formulario invitados</title>
+</head>
+<body>
+    <main class="container">
+        <div class="row">
+            <div class="col-12 pt-4">
+                <h2>Lista de invitados</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 py-2">
+                Complete el siguiente formulario
+            </div>
+        </div>
+        <?php if($mensajeInvitado != "" || $mensajeCodigo != ""): ?>
+        <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert" name="aviso-eliminar">
+            <?php echo $mensajeInvitado; 
+                echo $mensajeCodigo ?>
+        </div>
+        <?php endif; ?>
+        <div class="row">
+            <form action="" method="POST">
+                <div class="col-6">
+                    <label for="txtDocumento">Ingrese el DNI:</label>
+                    <input type="text" name="txtDocumento" id="txtDocumento" class="form-control">
+                </div>
+                <div class="col-6 pt-3">
+                    <button type="submit" id="btnInvitado" name="btnInvitado" class="btn btn-primary">Verificar invitado</button>
+                </div>
+                <div class="col-6 pt-3">
+                    <label for="txtCodigo">Ingrese el codigo secreto para el pase VIP:</label>
+                    <input type="text" name="txtCodigo" id="txtCodigo" class="form-control">
+                </div>
+                <div class="col-6 pt-3">
+                    <button type="submit" id="btnCodigo" name="btnCodigo" class="btn btn-primary">Verificar codigo</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
