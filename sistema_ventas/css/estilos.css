@@ -12,3 +12,8 @@
 .img-thumbnail{
 	width: 150px;
 }
+
+.recorte-container {
+    height: 550px;
+    width: 100%;
+}

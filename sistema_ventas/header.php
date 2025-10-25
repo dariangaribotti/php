@@ -1,10 +1,12 @@
 <?php
 
-if(isset($_GET["accion"]) && $_GET["accion"] == "cerrar-session"){
-    $_SESSION = array();
-    session_destroy();
-    header("Location: login.php");
-    exit;
+if($_POST){
+    if(isset($_POST["btnCerrar"])){
+        if($_SESSION["nombre"]){
+            session_destroy();
+            header("Location: login.php");
+        }
+    }
 }
 
 ?>
@@ -94,8 +96,8 @@ if(isset($_GET["accion"]) && $_GET["accion"] == "cerrar-session"){
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION["nombre"]; ?></span>
-                <img class="img-profile rounded-circle" src="https://unsplash.com/es/fotos/una-cascada-en-medio-de-un-bosque-yr4WoVMYQaQ">
+                <span class="mr-2 d-none d-lg-inline text-gray-900 small"><?php echo $_SESSION["nombre"]; ?></span>
+                <img class="img-profile rounded-circle" src="https://images.unsplash.com/photo-1547371026-a3952b80acb5?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=465">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -104,7 +106,7 @@ if(isset($_GET["accion"]) && $_GET["accion"] == "cerrar-session"){
                   Cuenta
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="?accion=cerrar-session" data-target="#logoutModal">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Cerrar sesión
                 </a>

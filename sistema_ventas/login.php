@@ -10,8 +10,8 @@ $claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
 //Es postback?
 if($_POST){
     
-    $usuario = $_POST["txtUsuario"];
-    $clave = $_POST["txtClave"];
+    $usuario = trim($_POST["txtUsuario"]);
+    $clave = trim($_POST["txtClave"]);
 
     //Si el usuario es admin y la clave es admin123:
     if($usuario == "admin" && $clave == "admin123"){
@@ -20,7 +20,7 @@ if($_POST){
         //y Redireccionamos al index
         header("Location: index.php");
     } else {
-    //Si no es correcto la clave o el usuario mostrar en pantalla "Usuario o clave incorrecto"
+        //Si no es correcto la clave o el usuario mostrar en pantalla "Usuario o clave incorrecto"
         $msg = "Usuario o clave incorrecto";
     }
 }
@@ -45,6 +45,7 @@ if($_POST){
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
 
 </head>
 
@@ -55,13 +56,15 @@ if($_POST){
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
+      <div class="col-xl-10 col-lg-12 col-md-9 mt-4">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg mt-4">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+              <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                <img class="img-fluid recorte-container" src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=717">
+              </div>
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
