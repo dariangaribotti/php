@@ -121,8 +121,6 @@ function saludar($nombre, $apellido = ""){
 
 echo saludar("Ricardo", "Moralez");
 
-
-
 // Ámbito local y Ámbito global
 // Mala practica
 
@@ -144,6 +142,46 @@ function calcularNeto($bruto){ // Lo puse como parámetros.
 }
 
 echo calcularNeto($bruto);
+
+// Clases
+class Persona extends Socio { // El plano, el molde, define como tiene que ser una persona.
+    public $nombreCompleto;
+    public $documento;
+    public $fechaNac;
+    public $telefono;
+    public $edad;
+    public $correo;
+    public $nacionalidad;
+    public $domicilio;
+    // Son las acciones, las funciones.
+    public function dormir(){}
+    public function comer(){}
+    public function ejercitar(){}
+    public function __construct() //Predefine un objeto, es decir, les pone el mismo valor a todos los objetos, para no repetir en cada código la variable.
+    {
+        $this ->edad = "14";    
+    }
+}
+class Socio {
+    public $tipoMembresia;
+    public $caducidad;
+    public $lugar;
+    public function insertar(){}
+    public function modificar(){}
+    public function eliminar(){}
+    public function actualizar(){}
+}
+
+// Objetos
+
+$alumno1 = new Persona();
+$alumno1 -> nombreCompleto = "Darian Garibotti";
+$alumno1 -> documento = "45204180";
+
+$alumno2 = new Socio();
+$alumno2 -> tipoMembresia = "Black";
+
+print_r($alumno1);
 
 */
 
