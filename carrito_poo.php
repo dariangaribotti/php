@@ -21,7 +21,13 @@ class Cliente {
     {
         $this->descuento = 0.0;
     }
-    public function imprimir(){}
+    public function imprimir(){
+        echo "Documento: " . $this->documento . "<br>";
+        echo "Nombre: " . $this->nombre . "<br>";
+        echo "Correo: " . $this->correo . "<br>";
+        echo "Telefono: " . $this->telefono . "<br>";
+        echo "Descuento: " . $this->descuento . "<br><br>";
+    }
 }
 
 class Producto {
@@ -41,7 +47,11 @@ class Producto {
         $this->iva = 0.0;
     }
     public function imprimir(){
-        
+        echo "Cod: " . $this->cod . "<br>";
+        echo "Nombre: " . $this->nombre . "<br>";
+        echo "Precio: " . $this->precio . "<br>";
+        echo "Descripcion: " .  $this->descripcion . "<br>";
+        echo "Iva: " .  $this->iva . "<br><br>";
     }
 }
 
@@ -61,8 +71,70 @@ class Carrito {
         $this->subTotal = 0.0;
         $this->total = 0.0;
     }
-    public function cargarProducto(){}
-    public function imprimirTicket(){}
+
+    public function cargarProducto($producto){
+
+        $this->aProductos[] = $producto;
+
+    }
+
+    public function imprimirTicket(){ 
+
+        foreach($this->aProductos as $producto){
+            
+            $this->subTotal += $producto->precio;
+        }
+
+        //Subtotal + Descuento
+        $montoDescuento = $this->subTotal * $this->cliente->descuento;
+
+        $this->subTotal = $this->subTotal - $montoDescuento;
+
+        //Total con Iva
+
+        ?>
+        <table class="table table-hover border">
+                <thead class="text-center">
+                    <tr>
+                        <th colspan="2">ECO MARKET</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Fecha</th>
+                        <td><?php echo date("d/m/Y H:i:s") ?></td>
+                    </tr>
+                    <tr>
+                        <th>DNI</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Nombre</th>
+                        <td></td>
+                    </tr>
+                    <tr>   
+                        <th>Productos:</th>
+                        <td></td>
+                    </tr>
+                    <?php foreach($this->aProductos as $producto): ?>
+                    <tr>
+                        <td><?php echo $producto->nombre; ?></td>
+                        <td><?php echo $producto->precio; ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    <tr>
+                        <th>Subtotal s/IVA:</th>
+                        <td><?php echo $this->subTotal;; ?></td>
+                    </tr>
+                    <tr>
+                        <th>TOTAL:</th>
+                        <td><?php echo $this->total; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <?php
+    }
 }
 
 //Programa
@@ -86,7 +158,7 @@ $producto1 -> imprimir();
 $producto2 = new Producto();
 $producto2 -> cod = "QWR230";
 $producto2 -> nombre = "Motorola G85 5G";
-$producto2 -> precio = 20200;
+$producto2 -> precio = 60800;
 $producto2 -> descripcion = "Esto es un telefono Motorola";
 $producto2 -> iva = 21;
 $producto2 -> imprimir();
@@ -95,7 +167,7 @@ $carrito = new Carrito();
 $carrito -> cliente = $cliente1;
 $carrito -> cargarProducto($producto1);
 $carrito -> cargarProducto($producto2);
-$carrito -> imprimirTicket(); //Imprime el ticket de la compra
+//$carrito -> imprimirTicket(); Imprime el ticket de la compra
 
 ?>
 
@@ -111,74 +183,7 @@ $carrito -> imprimirTicket(); //Imprime el ticket de la compra
     <main class="container-fluid">
         <div class="row">
             <div class="col-3 mt-5 ms-5">
-                <table class="table table-hover border">
-                    <thead class="text-center">
-                        <tr>
-                            <th colspan="2">ECO MARKET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Fecha</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>DNI</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>Nombre</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Productos:</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>Descripcion:</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td>Hola</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-3 mt-5 ms-5">
-                <table class="table table-hover border">
-                    <thead class="text-center">
-                        <tr>
-                            <th colspan="2">ECO MARKET</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Fecha</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>DNI</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>Nombre</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>Productos:</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th>Descripcion:</th>
-                            <td>Hola</td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td>Hola</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <?php $carrito->imprimirTicket(); ?> 
             </div>
         </div>
     </main>
