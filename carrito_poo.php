@@ -46,6 +46,7 @@ class Producto {
         $this->precio = 0.0;
         $this->iva = 0.0;
     }
+    
     public function imprimir(){
         echo "Cod: " . $this->cod . "<br>";
         echo "Nombre: " . $this->nombre . "<br>";
@@ -65,7 +66,7 @@ class Carrito {
     public function __set($name, $value){$this->$name = $value;}
     public function __get($name){return $this->$name;}
 
-    public function __construct( )
+    public function __construct()
     {
         $this->aProductos = array();
         $this->subTotal = 0.0;
@@ -78,22 +79,22 @@ class Carrito {
 
     }
 
-    public function imprimirTicket(){ 
+    public function imprimirTicket(){
 
-        foreach($this->aProductos as $producto){
-            
-            $this->subTotal += $producto->precio;
-        }
+    $montoIvaTotal = 0.0;
+    $subtotalBase = 0.0;
 
-        //Subtotal + Descuento
-        $montoDescuento = $this->subTotal * $this->cliente->descuento;
+    foreach($this->aProductos as $producto){
+        $subtotalBase += $producto->precio; 
+        $montoIvaTotal += $producto->precio * ($producto->iva / 100);
+    }
+    
+    $this->subTotal = $subtotalBase * (1 - $this->cliente->descuento);
 
-        $this->subTotal = $this->subTotal - $montoDescuento;
-
-        //Total con Iva
-
+    $this->total = ($subtotalBase + $montoIvaTotal) * (1 - $this->cliente->descuento);
+    
         ?>
-        <table class="table table-hover border">
+            <table class="table table-hover border">
                 <thead class="text-center">
                     <tr>
                         <th colspan="2">ECO MARKET</th>
@@ -106,11 +107,11 @@ class Carrito {
                     </tr>
                     <tr>
                         <th>DNI</th>
-                        <td></td>
+                        <td><?php echo number_format($this->cliente->documento, 0, ".", "."); ?></td>
                     </tr>
                     <tr>
                         <th>Nombre</th>
-                        <td></td>
+                        <td><?php echo $this->cliente->nombre; ?></td>
                     </tr>
                     <tr>   
                         <th>Productos:</th>
@@ -119,20 +120,19 @@ class Carrito {
                     <?php foreach($this->aProductos as $producto): ?>
                     <tr>
                         <td><?php echo $producto->nombre; ?></td>
-                        <td><?php echo $producto->precio; ?></td>
+                        <td><?php echo number_format($producto->precio, 2, ",","."); ?></td>
                     </tr>
                     <?php endforeach; ?>
                     <tr>
                         <th>Subtotal s/IVA:</th>
-                        <td><?php echo $this->subTotal;; ?></td>
+                        <td><?php echo number_format($this->subTotal, 2, ",", "."); ?></td>
                     </tr>
                     <tr>
                         <th>TOTAL:</th>
-                        <td><?php echo $this->total; ?></td>
+                        <td><?php echo number_format($this->total, 2, ",", "."); ?></td>
                     </tr>
                 </tbody>
             </table>
-
         <?php
     }
 }
@@ -167,10 +167,8 @@ $carrito = new Carrito();
 $carrito -> cliente = $cliente1;
 $carrito -> cargarProducto($producto1);
 $carrito -> cargarProducto($producto2);
-//$carrito -> imprimirTicket(); Imprime el ticket de la compra
 
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
