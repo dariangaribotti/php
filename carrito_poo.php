@@ -81,59 +81,40 @@ class Carrito {
 
     public function imprimirTicket(){
 
-    $montoIvaTotal = 0.0;
-    $subtotalBase = 0.0;
-
-    foreach($this->aProductos as $producto){
-        $subtotalBase += $producto->precio; 
-        $montoIvaTotal += $producto->precio * ($producto->iva / 100);
-    }
-    
-    $this->subTotal = $subtotalBase * (1 - $this->cliente->descuento);
-
-    $this->total = ($subtotalBase + $montoIvaTotal) * (1 - $this->cliente->descuento);
-    
-        ?>
-            <table class="table table-hover border">
-                <thead class="text-center">
-                    <tr>
-                        <th colspan="2">ECO MARKET</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Fecha</th>
-                        <td><?php echo date("d/m/Y H:i:s") ?></td>
-                    </tr>
-                    <tr>
-                        <th>DNI</th>
-                        <td><?php echo number_format($this->cliente->documento, 0, ".", "."); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Nombre</th>
-                        <td><?php echo $this->cliente->nombre; ?></td>
-                    </tr>
-                    <tr>   
-                        <th>Productos:</th>
-                        <td></td>
-                    </tr>
-                    <?php foreach($this->aProductos as $producto): ?>
-                    <tr>
-                        <td><?php echo $producto->nombre; ?></td>
-                        <td><?php echo number_format($producto->precio, 2, ",","."); ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                    <tr>
-                        <th>Subtotal s/IVA:</th>
-                        <td><?php echo number_format($this->subTotal, 2, ",", "."); ?></td>
-                    </tr>
-                    <tr>
-                        <th>TOTAL:</th>
-                        <td><?php echo number_format($this->total, 2, ",", "."); ?></td>
-                    </tr>
-                </tbody>
-            </table>
-        <?php
+        echo "<table class='table table-hover border' style='width:400px'>";
+        echo "<tr><th colspan='2' class='text-center'>ECO MARKET</th></tr>
+                <tr>
+                    <th>Fecha</th>
+                    <td>" . date("d/m/Y H:i:s") . "</td>
+                </tr>
+                <tr>
+                    <th>DNI</th>
+                    <td>" . $this->cliente->documento . "</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>" . $this->cliente->nombre . "</td>
+                </tr>
+                <tr>
+                    <th colspan='2'>Producto:</th>
+                </tr>";
+            foreach ($this->aProductos as $producto){
+                    echo "<tr>
+                            <td>" . $producto->nombre . "</td>
+                            <td>" . number_format($producto->precio, 2, ",",".") . "</td>
+                        </tr>";
+                $this->subTotal += $producto->precio;
+                $this->total += $producto->precio * (($producto->iva / 100)+1);
+            }
+        echo "<tr>
+                <th>Subtotal</<th>
+                <td>" . number_format($this->subTotal, 2, ",",".") . "</td>
+            </tr>
+            <tr>
+                <th>Total</<th>
+                <td>" . number_format($this->total, 2, ",",",") . "</td>
+            </tr>
+        </table>"; 
     }
 }
 
@@ -167,7 +148,6 @@ $carrito = new Carrito();
 $carrito -> cliente = $cliente1;
 $carrito -> cargarProducto($producto1);
 $carrito -> cargarProducto($producto2);
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
