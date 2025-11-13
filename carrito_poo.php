@@ -107,12 +107,12 @@ class Carrito {
                 $this->total += $producto->precio * (($producto->iva / 100)+1);
             }
         echo "<tr>
-                <th>Subtotal</<th>
+                <th>Subtotal</th>
                 <td>" . number_format($this->subTotal, 2, ",",".") . "</td>
             </tr>
             <tr>
-                <th>Total</<th>
-                <td>" . number_format($this->total, 2, ",",",") . "</td>
+                <th>Total</th>
+                <td>" . number_format($this->total, 2, ",",".") . "</td>
             </tr>
         </table>"; 
     }

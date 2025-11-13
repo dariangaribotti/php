@@ -62,6 +62,9 @@ class Persona {
     protected $correo;
     protected $celular;
 
+    public function __get($name){return $this->$name;}
+    public function __set($name, $value){$this->$name = $value;}
+
     public function __construct($dni, $nombre, $correo, $celular)
     {
     $this->dni = $dni;
@@ -82,16 +85,19 @@ class Alumno extends Persona{
     public function __get($name){return $this->$name;}
     public function __set($name, $value){$this->$name = $value;}
 
-    public function __construct($dni, $nombre, $correo, $celular)
+    public function __construct($dni, $nombre, $correo, $celular, $fechaNac)
     {
         $this->peso = 0.0;
         $this->altura = 0.0;
         $this->aptoFisico = false;
         $this->presentismo = 0.0;
+
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->correo = $correo;
         $this->celular = $celular;
+
+        $this->fechaNac = $fechaNac;
     }
     public function setFichaMedica($peso, $altura, $aptoFisico){
         $this->peso = $peso;
@@ -118,24 +124,24 @@ class Entrenador extends Persona {
     }
 }
 
-$entrenador1 = new Entrenador("340200300", "Miguel Ocampo", "miguel@mail.com", "11445522");
+$entrenador1 = new Entrenador("340200300", "Miguel Ocampo", "miguel@mail.com", "114455 22");
 $entrenador2 = new Entrenador("259569459", "Andrea Zarate", "andrea@mail.com", "11490954");
 
 $alumno1 = new Alumno("205400300", "Dante Montera", "dante@mail.com", "1143553323", "1997-04-26");
-$alumno1 ->setFichaMedica(90, 160, true);
-$alumno1 ->presentismo = 78;
+$alumno1->setFichaMedica(90, 160, true);
+$alumno1->presentismo = 78;
 
 $alumno2 = new Alumno("203123423", "Dario Turchi", "dario@mail.com", "115345343", "1997-04-26");
-$alumno2 ->setFichaMedica(73, 168, false);
-$alumno2 ->presentismo = 67;
+$alumno2->setFichaMedica(73, 168, false);
+$alumno2->presentismo = 67;
 
 $alumno3 = new Alumno("264340034", "Facundo Fagnano", "facundo@mail.com", "1155534344", "1997-04-26");
-$alumno3 ->setFichaMedica(90, 187, true);
-$alumno3 ->presentismo = 96;
+$alumno3->setFichaMedica(90, 187, true);
+$alumno3->presentismo = 96;
 
 $alumno4 = new Alumno("45343400", "Gaston Aguilar", "gaston@mail.com", "117756568", "1997-04-26");
-$alumno4 ->setFichaMedica(70, 169, false);
-$alumno4 ->presentismo = 98;
+$alumno4->setFichaMedica(70, 169, false);
+$alumno4->presentismo = 98;
 
 $clase1 = new Clase();
 $clase1->nombre = "Funcional";
