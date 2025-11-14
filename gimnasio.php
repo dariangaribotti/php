@@ -9,8 +9,8 @@ class Clase {
     private $entrenador;
     private $aAlumnos;
 
-    public function __get($name){return $this->$name;}
     public function __set($name, $value){$this->$name = $value;}
+    public function __get($name){return $this->$name;}
 
     public function __construct()
     {
@@ -45,7 +45,7 @@ class Clase {
                     </tr>";
                     foreach($this->aAlumnos as $alumno){
                         echo "<tr>
-                                <td>" . $alumno->dni . "</td>
+                                <td>" . number_format($alumno->dni, 0, ".", ".") . "</td>
                                 <td>" . $alumno->nombre . "</td>
                                 <td>" . $alumno->correo . "</td>
                                 <td>" . $alumno->celular . "</td>
@@ -62,8 +62,8 @@ class Persona {
     protected $correo;
     protected $celular;
 
-    public function __get($name){return $this->$name;}
     public function __set($name, $value){$this->$name = $value;}
+    public function __get($name){return $this->$name;}
 
     public function __construct($dni, $nombre, $correo, $celular)
     {
@@ -82,8 +82,8 @@ class Alumno extends Persona{
     private $aptoFisico;
     private $presentismo;
 
-    public function __get($name){return $this->$name;}
     public function __set($name, $value){$this->$name = $value;}
+    public function __get($name){return $this->$name;}
 
     public function __construct($dni, $nombre, $correo, $celular, $fechaNac)
     {
@@ -114,28 +114,30 @@ class Entrenador extends Persona {
 
     public function __construct($dni, $nombre, $correo, $celular)
     {
-        $this->aClases = array();
         $this->dni = $dni;
         $this->nombre = $nombre;
         $this->correo = $correo;
         $this->celular = $celular;
+
+        $this->aClases = array();
     }
-    public function asignarClase(){
+    public function asignarClase($clase){
+        $this->aClases = $clase;
     }
 }
 
-$entrenador1 = new Entrenador("340200300", "Miguel Ocampo", "miguel@mail.com", "114455 22");
-$entrenador2 = new Entrenador("259569459", "Andrea Zarate", "andrea@mail.com", "11490954");
+$entrenador1 = new Entrenador("34200300", "Miguel Ocampo", "miguel@mail.com", "114455 22");
+$entrenador2 = new Entrenador("25569459", "Andrea Zarate", "andrea@mail.com", "11490954");
 
-$alumno1 = new Alumno("205400300", "Dante Montera", "dante@mail.com", "1143553323", "1997-04-26");
+$alumno1 = new Alumno("20400300", "Dante Montera", "dante@mail.com", "1143553323", "1997-04-26");
 $alumno1->setFichaMedica(90, 160, true);
 $alumno1->presentismo = 78;
 
-$alumno2 = new Alumno("203123423", "Dario Turchi", "dario@mail.com", "115345343", "1997-04-26");
+$alumno2 = new Alumno("20123423", "Dario Turchi", "dario@mail.com", "115345343", "1997-04-26");
 $alumno2->setFichaMedica(73, 168, false);
 $alumno2->presentismo = 67;
 
-$alumno3 = new Alumno("264340034", "Facundo Fagnano", "facundo@mail.com", "1155534344", "1997-04-26");
+$alumno3 = new Alumno("24340034", "Facundo Fagnano", "facundo@mail.com", "1155534344", "1997-04-26");
 $alumno3->setFichaMedica(90, 187, true);
 $alumno3->presentismo = 96;
 

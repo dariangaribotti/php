@@ -10,6 +10,9 @@ class Persona{ //Plano o el molde
     protected $edad;
     protected $nacionalidad;
     //Acciones o métodos
+    public function __set($name, $value){$this->$name = $value;} // Al usar la function __set y __get -> mas cómodo y no repetís a cada rato funciones.
+    public function __get($name){return $this->$name;}
+
     public function __destruct()
     {
         echo "Destruyendo el objeto de " . $this->nombre;
@@ -46,9 +49,6 @@ class Alumno extends Persona { //Herencia, sirve para reutilizar el codigo
         $this -> notaPhp = 0.0;
         $this -> notaProyecto = 0.0;
     }
-
-    public function __set($name, $value){$this->$name = $value;} // Al usar la function __set y __get -> mas cómodo y no repetís a cada rato funciones.
-    public function __get($name){return $this->$name;}
 
     public function setPortfolio($nota){$this-> notaPortfolio = $nota;} // Menos comodo, hay que repetir continuamente. En otros lenguajes si o si se usa asi, pero en este caso, no es necesario.
     public function getPortfolio(){ return $this->notaPortfolio;}
