@@ -30,7 +30,7 @@ class Tarjeta {
     const TIPO_AMEX = "American Express";
 }
 
-class Persona {
+abstract class Persona {
     protected $dni;
     protected $nombre;
     protected $correo;
@@ -38,6 +38,8 @@ class Persona {
 
     public function __get($name){return $this->$name;}
     public function __set($name, $value){$this->$name = $value;}
+
+    abstract public function imprimir();
 }
 
 class Socio extends Persona {

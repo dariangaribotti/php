@@ -56,7 +56,7 @@ class Clase {
     }
 }
 
-class Persona {
+abstract class Persona {
     protected $dni;
     protected $nombre;
     protected $correo;
@@ -65,7 +65,7 @@ class Persona {
     public function __set($name, $value){$this->$name = $value;}
     public function __get($name){return $this->$name;}
 
-    public function __construct($dni, $nombre, $correo, $celular)
+    public function __construct($dni, $nombre, $correo, $celular) 
     {
     $this->dni = $dni;
     $this->nombre = $nombre;
@@ -87,15 +87,12 @@ class Alumno extends Persona{
 
     public function __construct($dni, $nombre, $correo, $celular, $fechaNac)
     {
+        parent::__construct($dni, $nombre, $correo, $celular); //Parent Permite usarlo desde la clase Padre, no se repite codigo
+
         $this->peso = 0.0;
         $this->altura = 0.0;
         $this->aptoFisico = false;
         $this->presentismo = 0.0;
-
-        $this->dni = $dni;
-        $this->nombre = $nombre;
-        $this->correo = $correo;
-        $this->celular = $celular;
 
         $this->fechaNac = $fechaNac;
     }
@@ -114,10 +111,7 @@ class Entrenador extends Persona {
 
     public function __construct($dni, $nombre, $correo, $celular)
     {
-        $this->dni = $dni;
-        $this->nombre = $nombre;
-        $this->correo = $correo;
-        $this->celular = $celular;
+        parent::__construct($dni, $nombre, $correo, $celular); //Parent Permite usarlo desde la clase Padre, no se repite codigo
 
         $this->aClases = array();
     }
