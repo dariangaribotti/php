@@ -39,7 +39,7 @@ abstract class Persona {
     public function __get($name){return $this->$name;}
     public function __set($name, $value){$this->$name = $value;}
 
-    abstract public function imprimir();
+    abstract public function imprimir(); //Al usar este metodo, obliga a la clase hija a que use el metodo imprimir.
 }
 
 class Socio extends Persona {
@@ -72,7 +72,7 @@ class Socio extends Persona {
         }
 
     }
-    public function imprimir(){
+    public function imprimir(){ //Si en la clase padre, se usa un abstract en el metodo imprimir, si no hay nada, se ejecuta igual, pero si esta borrado el metodo, causa un error.
         echo "<table class='table table-striped table-hover table-bordered border' style='width:1300px;'>";
         echo "<thead>
                     <tr class='text-start table-dark'>
