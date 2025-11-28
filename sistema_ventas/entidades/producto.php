@@ -65,11 +65,65 @@ class Producto {
         $mysqli->close();
     }
 
-    public function eliminar(){}
+    public function eliminar(){
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
-    public function obtenerPorId(){}
+        $sql = "DELETE FROM productos WHERE idproducto = " . $this->idproducto;
 
-    public function obtenerTodos(){}
+        if(!$mysqli->query($sql)){
+            printf("Error en Query: %s\n", $mysqli->error . " " . $sql);
+        }
+    }
+
+    public function obtenerPorId(){
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+        $sql = "SELECT idproducto,
+                        nombre,
+                        cantidad,
+                        precio,
+                        descripcion,
+                        imagen,
+                        fk_idtipoproducto
+                    FROM productos
+                    WHERE idproducto = $this->idproducto";
+
+        if(!$resultado = $mysqli->query($sql)){
+            printf("Error en Query%s\n", $mysqli->error . " " . $sql);
+        }
+        //Convierte el resultado en un Array asociativo
+        if($fila = $resultado->fetch_assoc()){
+            $this->idproducto = $fila["idproducto"];
+            $this->nombre = $fila["nombre"];
+            $this->cantidad = $fila["cantidad"];
+            $this->precio = $fila["precio"];
+            $this->descripcion = $fila["descripcion"];
+            $this->imagen = $fila["imagen"];
+            $this->fk_idtipoproducto = $fila["fk_idtipoproducto"];
+        }
+        $mysqli->close();
+    }
+
+    public function obtenerTodos(){
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+
+        $sql = "SELECT idproducto,
+                        nombre,
+                        cantidad,
+                        precio,
+                        descripcion,
+                        imagen,
+                        fk_idtipoproducto
+                    FROM productos";
+        if(!$resultado = $mysqli->query($sql)){
+            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+        }
+
+        $aResultado = array();
+
+        while($fila = $resultado->fetch_assoc()){
+            
+        }
+    }
 
 }
 
