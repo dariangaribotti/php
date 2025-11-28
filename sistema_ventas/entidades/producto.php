@@ -121,8 +121,18 @@ class Producto {
         $aResultado = array();
 
         while($fila = $resultado->fetch_assoc()){
-            
+            $entidadAux = new Producto();
+            $entidadAux->idproducto = $fila["idproducto"];
+            $entidadAux->nombre = $fila["nombre"];
+            $entidadAux->cantidad = $fila["cantidad"];
+            $entidadAux->precio = $fila["precio"];
+            $entidadAux->descripcion = $fila["descripcion"];
+            $entidadAux->imagen = $fila["imagen"];
+            $entidadAux->fk_idtipoproducto = $fila["fk_idtipoproducto"];
+            $aResultado[] = $entidadAux;
+
         }
+        return $aResultado;
     }
 
 }
