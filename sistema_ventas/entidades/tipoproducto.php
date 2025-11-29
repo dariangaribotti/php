@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 class Tipoproducto {
     private $idtipoproducto;
     private $nombre;
@@ -59,11 +62,35 @@ class Tipoproducto {
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
         }
 
-        while($fila = $resultado->fetch_assoc()){
-
+        if($fila = $resultado->fetch_assoc()){
+            $this->idtipoproducto = $fila["idtipoproducto"];
+            $this->nombre = $fila["nombre"];
         }
+        $mysqli->close();
     }
-    public function obtenerTodos(){}
+    public function obtenerTodos(){
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+
+        $sql = "SELECT
+                    idtipoproducto,
+                    nombre
+                FROM tipoproducto";
+        
+        if(!$resultado = $mysqli->query($sql)){
+            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+        }
+
+        $aResultado = array();
+        if($resultado){
+            while($fila = $resultado->fetch_assoc()){
+                $entidadAux = new Tipoproducto();
+                $entidadAux->idtipoproducto = $fila["idtipoproducto"];
+                $entidadAux->nombre = $fila["nombre"];
+                $aResultado[] = $entidadAux;
+            }
+        }
+        return $aResultado;
+    }
 }
 
 ?>
