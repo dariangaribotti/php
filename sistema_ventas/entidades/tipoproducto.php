@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-class Tipoproducto {
+class TipoProducto {
     private $idtipoproducto;
     private $nombre;
 
@@ -32,7 +32,7 @@ class Tipoproducto {
     public function actualizar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         
-        $sql = "UPDATE tipoproducto SET
+        $sql = "UPDATE tipoproductos SET
                 nombre = '$this->nombre'
                 WHERE idproducto = " . $this->idproducto;
         
@@ -59,7 +59,7 @@ class Tipoproducto {
         $sql = "SELECT idproducto,
                         nombre
                 FROM tipoproductos
-                WHERE idproducto = $this->idproducto";
+                WHERE idproductos = $this->idproducto";
         if(!$resultado = $mysqli->query($sql)){
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
         }
@@ -76,7 +76,7 @@ class Tipoproducto {
         $sql = "SELECT
                     idtipoproducto,
                     nombre
-                FROM tipoproducto";
+                FROM tipoproductos";
         
         if(!$resultado = $mysqli->query($sql)){
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
@@ -85,7 +85,7 @@ class Tipoproducto {
         $aResultado = array();
         if($resultado){
             while($fila = $resultado->fetch_assoc()){
-                $entidadAux = new Tipoproducto();
+                $entidadAux = new TipoProducto();
                 $entidadAux->idtipoproducto = $fila["idtipoproducto"];
                 $entidadAux->nombre = $fila["nombre"];
                 $aResultado[] = $entidadAux;
