@@ -23,17 +23,19 @@ class Venta {
                     preciounitario,
                     total
                     ) VALUES (
-                    '$this->fk_idcliente',
-                    '$this->fk_idproducto',
+                    $this->fk_idcliente,
+                    $this->fk_idproducto,
                     '$this->fecha',
-                    '$this->cantidad',
-                    '$this->preciounitario',
-                    '$this->total'
+                    $this->cantidad,
+                    $this->preciounitario,
+                    $this->total
                     )";
 
         if(!$mysqli->query($sql)){
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
         }
+
+        $this->idventa = $mysqli->insert_id;
 
         $mysqli->close();
     }
@@ -41,12 +43,12 @@ class Venta {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
 
         $sql = "UPDATE ventas SET
-                    fk_idcliente = '$this->fk_idcliente',
-                    fk_idproducto = '$this->fk_idproducto',
+                    fk_idcliente = $this->fk_idcliente,
+                    fk_idproducto = $this->fk_idproducto,
                     fecha = '$this->fecha',
-                    cantidad = '$this->cantidad',
-                    preciounitario = '$this->preciounitario',
-                    total = '$this->total'
+                    cantidad = $this->cantidad,
+                    preciounitario = $this->preciounitario,
+                    total = $this->total
                 WHERE idventa = " . $this->idventa;
             
         if(!$mysqli->query($sql)){
@@ -59,8 +61,7 @@ class Venta {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
 
         $sql = "DELETE FROM venta
-                WHERE idventa = '$this->idventa'
-                ";
+                WHERE idventa = $this->idventa";
 
         if($mysqli->query($sql)){
             printf("Error en query%s\n", $mysqli->error . " " . $sql);

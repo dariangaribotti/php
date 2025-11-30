@@ -31,18 +31,18 @@ class Producto {
                     fk_idtipoproducto
                 ) VALUES (
                     '$this->nombre',
-                    '$this->cantidad',
-                    '$this->precio',
+                    $this->cantidad,
+                    $this->precio,
                     '$this->descripcion',
                     '$this->imagen',
-                    '$this->fk_idtipoproducto'
+                    $this->fk_idtipoproducto
                 );";
         //Tercer paso: Ejecuta la query
         if (!$mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
         //Cuarto Paso: Obtener el id generado por la inserción
-        $this->idcliente = $mysqli->insert_id;
+        $this->idproducto = $mysqli->insert_id;
         //Quinto Paso: Cerrar la conexión
         $mysqli->close();
     }
@@ -52,11 +52,11 @@ class Producto {
         
         $sql = "UPDATE productos SET
                 nombre = '$this->nombre',
-                cantidad = '$this->cantidad',
-                precio = '$this->precio',
+                cantidad = $this->cantidad,
+                precio = $this->precio,
                 descripcion = '$this->descripcion',
                 imagen = '$this->imagen',
-                fk_idtipoproducto = '$this->fk_idtipoproducto',
+                fk_idtipoproducto = $this->fk_idtipoproducto,
                 WHERE idproducto = $this->idproducto";
 
         if(!$mysqli->query($sql)){

@@ -24,7 +24,7 @@ class Tipoproducto {
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
         }
 
-        $this->idcliente = $mysqli->insert_id;
+        $this->idtipoproducto = $mysqli->insert_id;
 
         $mysqli->close();
     }
