@@ -124,7 +124,7 @@ class Cliente
                         domicilio
                 FROM clientes
                 WHERE idcliente = $this->idcliente";
-        if (!$resultado = $mysqli->query($sql)) {
+        if (!$resultado = $mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
@@ -140,6 +140,7 @@ class Cliente
             $this->fk_idlocalidad = $fila["fk_idlocalidad"];
             $this->domicilio = $fila["domicilio"];
         }
+
         $mysqli->close();
 
     }
