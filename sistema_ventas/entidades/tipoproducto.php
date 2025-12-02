@@ -1,8 +1,4 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 class TipoProducto {
     private $idtipoproducto;
     private $nombre;
@@ -34,10 +30,10 @@ class TipoProducto {
         
         $sql = "UPDATE tipoproductos SET
                 nombre = '$this->nombre'
-                WHERE idproducto = " . $this->idproducto;
+                WHERE idproducto = " . $this->idtipoproducto;
         
         if(!$mysqli->query($sql)){
-            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         $mysqli->close();
@@ -46,10 +42,10 @@ class TipoProducto {
     public function eliminar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         
-        $sql = "DELETE FROM tipoproductos where idproducto = " . $this->idproducto;
+        $sql = "DELETE FROM tipoproductos where idproducto = " . $this->idtipoproducto;
 
         if(!$mysqli->query($sql)){
-            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
         $mysqli->close();
     }
@@ -59,9 +55,10 @@ class TipoProducto {
         $sql = "SELECT idproducto,
                         nombre
                 FROM tipoproductos
-                WHERE idproductos = $this->idproducto";
+                WHERE idproductos = $this->idtipoproducto";
+                
         if(!$resultado = $mysqli->query($sql)){
-            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         if($fila = $resultado->fetch_assoc()){
@@ -79,7 +76,7 @@ class TipoProducto {
                 FROM tipoproductos";
         
         if(!$resultado = $mysqli->query($sql)){
-            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         $aResultado = array();

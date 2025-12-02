@@ -154,8 +154,8 @@ class Cliente
                     telefono,
                     correo,
                     fecha_nac,
-                    fk_idprovincia,
                     fk_idlocalidad,
+                    fk_idprovincia,
                     domicilio
                 FROM clientes";
         if (!$resultado = $mysqli->query($sql)) {

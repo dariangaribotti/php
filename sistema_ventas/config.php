@@ -4,7 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 //Iniciamos la session
-session_start();
+if(!isset($_SESSION["nombre"])){
+    session_start();
+}
+
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 //date_default_timezone_set("America/Bogota");
