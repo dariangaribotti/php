@@ -13,6 +13,12 @@ class Producto {
     private $imagen;
     private $fk_idtipoproducto;
 
+    public function __construct()
+    {
+        $this->cantidad = 0;
+        $this->precio = 0;
+    }
+
     public function __set($name, $value){$this->$name = $value; return $this;}
     public function __get($name){return $this->$name;}
 
