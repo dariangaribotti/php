@@ -1,44 +1,19 @@
-
 <?php
 
 include_once "config.php";
 include_once "entidades/tipoproducto.php";
-
-$producto = new TipoProducto();
-$producto->cargarFormulario($_REQUEST);
-
-$pg = "Listado de productos";
-
-if ($_POST) {
-    if (isset($_POST["btnGuardar"])) {
-        if (isset($_GET["id"]) && $_GET["id"] > 0) {
-            //Actualizo un cliente existente
-            $producto->actualizar();
-        } else {
-            //Es nuevo
-            $producto->insertar();
-        }
-        $msg["texto"] = "Guardado correctamente";
-        $msg["codigo"] = "alert-success";
-
-    } else if (isset($_POST["btnBorrar"])){
-        $producto->eliminar();
-        header("Location: tipoproducto-listado.php");
-        }
-            
-    }
-
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $producto->obtenerPorId();
-}
-
 include_once "header.php";
+
+$tipoproducto = new TipoProducto();
+
+$pg = "Listado de Productos";
+
 ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Productos</h1>
+          <h1 class="h3 mb-4 text-gray-800">Tipo de Productos</h1>
           <?php if (isset($msg)): ?>
             <div class="row">
                 <div class="col-12">
@@ -59,7 +34,7 @@ include_once "header.php";
             <div class="row">
                 <div class="col-6 form-group">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $producto->nombre ?>">
+                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoproducto->nombre ?>">
                 </div>
             </div>
         </div>
@@ -67,4 +42,7 @@ include_once "header.php";
 
       </div>
       <!-- End of Main Content -->
+<script>
+
+</script>
 <?php include_once "footer.php";?>

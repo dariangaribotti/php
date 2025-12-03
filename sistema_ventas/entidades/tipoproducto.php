@@ -30,7 +30,7 @@ class TipoProducto {
         
         $sql = "UPDATE tipoproductos SET
                 nombre = '$this->nombre'
-                WHERE idproducto = " . $this->idtipoproducto;
+                WHERE idtipoproducto = " . $this->idtipoproducto;
         
         if(!$mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -42,7 +42,7 @@ class TipoProducto {
     public function eliminar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         
-        $sql = "DELETE FROM tipoproductos where idproducto = " . $this->idtipoproducto;
+        $sql = "DELETE FROM tipoproductos where idtipoproducto = " . $this->idtipoproducto;
 
         if(!$mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -52,10 +52,10 @@ class TipoProducto {
     public function obtenerPorId(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
-        $sql = "SELECT idproducto,
+        $sql = "SELECT idtipoproducto,
                         nombre
                 FROM tipoproductos
-                WHERE idproductos = $this->idtipoproducto";
+                WHERE idtipoproducto = " . $this->idtipoproducto;
                 
         if(!$resultado = $mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
