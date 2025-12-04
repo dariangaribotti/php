@@ -2,12 +2,11 @@
 
 include_once "config.php";
 include_once "entidades/tipoproducto.php";
-include_once "header.php";
 
 $tipoproducto = new TipoProducto();
-
 $pg = "Listado de Productos";
 
+include_once "header.php";
 ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">

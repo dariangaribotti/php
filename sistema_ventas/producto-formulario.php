@@ -3,11 +3,8 @@
 
 include_once "config.php";
 include_once "entidades/producto.php";
-include_once "header.php";
-
 
 $producto = new Producto();
-
 $pg = "Productos";
 
 include_once "header.php";
@@ -28,8 +25,8 @@ include_once "header.php";
             <?php endif;?>
             <div class="row">
                 <div class="col-12 mb-3">
-                    <a href="cliente-listado.php" class="btn btn-primary mr-2">Listado</a>
-                    <a href="cliente-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
+                    <a href="producto-listado.php" class="btn btn-primary mr-2">Listado</a>
+                    <a href="producto-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
                     <button type="submit" class="btn btn-success mr-2" id="btnGuardar" name="btnGuardar">Guardar</button>
                     <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar">Borrar</button>
                 </div>
@@ -54,10 +51,17 @@ include_once "header.php";
                     <input type="number" class="form-control" name="txtPrecio" id="txtPrecio"  min="0" step="1" value="<?php echo $producto->precio ?>">
                 </div>
                 <div class="col-12 form-group">
-                    descripcion
+                    <textarea type="text" name="txtDescripcion" id="txtDescripcion"><?php echo $producto->descripcion ?></textarea>
                 </div>
-                <div class="col-12 form-group">
-                    imagen
+                <div class="col-12 form-group"> 
+                    <label for="txtImagen">Imagen: </label>
+                    <input type="file" class="form-control-file" name="txtImagen" id="txtImagen">
+                    <?php if($producto->imagen != ""): ?>   
+                        <div class="mt-2">
+                            <img src="img/<?php echo $producto->imagen; ?>" alt="Imagen" class="img-thumbnail" style="max-width: 150px;">
+                        </div>
+                    <?php endif; ?>
+                    
                 </div>
             </div>
 
@@ -67,6 +71,10 @@ include_once "header.php";
       </div>
       <!-- End of Main Content -->
 <script>
-
+    ClassicEditor
+        .create ( document.querySelector ( '#txtDescripcion' ) )
+        .catch ( error => {
+            console.error ( error );
+        } );
 </script>
 <?php include_once "footer.php";?>
