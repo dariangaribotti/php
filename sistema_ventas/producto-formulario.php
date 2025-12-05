@@ -5,7 +5,7 @@ include_once "config.php";
 include_once "entidades/producto.php";
 
 $producto = new Producto();
-$pg = "Productos";
+$pg = "Producto";
 
 include_once "header.php";
 ?>
@@ -13,7 +13,7 @@ include_once "header.php";
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Productos</h1>
+          <h1 class="h3 mb-4 text-gray-800">Producto</h1>
           <?php if (isset($msg)): ?>
             <div class="row">
                 <div class="col-12">
@@ -48,14 +48,20 @@ include_once "header.php";
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtPrecio">Precio:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
                     <input type="number" class="form-control" name="txtPrecio" id="txtPrecio"  min="0" step="1" value="<?php echo $producto->precio ?>">
+                    </div>
                 </div>
                 <div class="col-12 form-group">
+                    <label for="txtDescripcion">Descripción:</label>
                     <textarea type="text" name="txtDescripcion" id="txtDescripcion"><?php echo $producto->descripcion ?></textarea>
                 </div>
                 <div class="col-12 form-group"> 
-                    <label for="txtImagen">Imagen: </label>
-                    <input type="file" class="form-control-file" name="txtImagen" id="txtImagen">
+                    <label for="fileImagen">Imagen: </label>
+                    <input type="file" class="form-control-file" name="fileImagen" id="fileImagen">
                     <?php if($producto->imagen != ""): ?>   
                         <div class="mt-2">
                             <img src="img/<?php echo $producto->imagen; ?>" alt="Imagen" class="img-thumbnail" style="max-width: 150px;">

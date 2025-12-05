@@ -4,6 +4,26 @@ include_once "config.php";
 include_once "entidades/tipoproducto.php";
 
 $tipoproducto = new TipoProducto();
+$tipoproducto->cargarFormulario($_REQUEST);
+
+if(isset($_POST["btnGuardar"])){
+    $tipoproducto = new TipoProducto();
+    $tipoproducto->cargarFormulario($_REQUEST);
+    $tipoproducto->insertar();
+}
+
+if(isset($_POST["btnBorrar"])){
+    $tipoproducto = new TipoProducto();
+    $tipoproducto->cargarFormulario($_REQUEST);
+    $tipoproducto->eliminar();
+    header("Location: tipoproducto-listado.php");
+}
+
+if (isset($_GET["id"]) && $_GET["id"] > 0) {
+    $tipoproducto->obtenerPorId();
+}
+
+
 $pg = "Listado de Productos";
 
 include_once "header.php";
@@ -33,7 +53,7 @@ include_once "header.php";
             <div class="row">
                 <div class="col-6 form-group">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoproducto->nombre ?>">
+                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoproducto->nombre; ?>">
                 </div>
             </div>
         </div>

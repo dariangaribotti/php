@@ -5,7 +5,7 @@ include_once "config.php";
 include_once "entidades/venta.php";
 
 $venta = new Venta();
-$pg = "Listado de ventas";
+$pg = "Formulario de ventas";
 
 include_once "header.php";
 ?>
@@ -13,7 +13,7 @@ include_once "header.php";
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Cliente</h1>
+          <h1 class="h3 mb-4 text-gray-800">Venta</h1>
           <?php if (isset($msg)): ?>
             <div class="row">
                 <div class="col-12">
@@ -36,44 +36,26 @@ include_once "header.php";
                     <label for="txtFechaNac" class="d-block">Fecha y hora:</label>
                     <select class="form-control d-inline"  name="txtDiaNac" id="txtDiaNac" style="width: 80px">
                         <option selected="" disabled="">DD</option>
-                        <?php for ($i = 1; $i <= 31; $i++): ?>
-                            <?php if ($cliente->fecha_nac != "" && $i == date_format(date_create($cliente->fecha_nac), "d")): ?>
-                            <option selected><?php echo $i; ?></option>
-                            <?php else: ?>
-                            <option><?php echo $i; ?></option>
-                            <?php endif;?>
-                        <?php endfor;?>
                     </select>
                     <select class="form-control d-inline"  name="txtMesNac" id="txtMesNac" style="width: 80px">
                         <option selected="" disabled="">MM</option>
-                        <?php for ($i = 1; $i <= 12; $i++): ?>
-                            <?php if ($cliente->fecha_nac != "" && $i == date_format(date_create($cliente->fecha_nac), "m")): ?>
-                            <option selected><?php echo $i; ?></option>
-                            <?php else: ?>
-                            <option><?php echo $i; ?></option>
-                            <?php endif;?>
-                        <?php endfor;?>
                     </select>
                     <select class="form-control d-inline"  name="txtAnioNac" id="txtAnioNac" style="width: 100px">
                         <option selected="" disabled="">YYYY</option>
-                        <?php for ($i = 1900; $i <= date("Y"); $i++): ?>
-                            <?php if ($cliente->fecha_nac != "" && $i == date_format(date_create($cliente->fecha_nac), "Y")): ?>
-                            <option selected><?php echo $i; ?></option>
-                            <?php else: ?>
-                            <option><?php echo $i; ?></option>
-                            <?php endif;?>
-                        <?php endfor;?> ?>
                     </select>
-                    <input 
-                        type="time" class="form-control d-inline" name="txtHora" id="txtHora" style="width: 120px;" value="<?php echo ($venta->fecha != "") ? date("H:i", strtotime($venta->fecha)) : "00:00"; ?>">
-                    </div>
+                    <input type="time" class="form-control d-inline" name="txtHora" id="txtHora" style="width: 120px;" value="00:00">
+                </div>
                     <div class="col-6 form-group">
                         <label for="txtCliente">Cliente:</label>
-                        <input type="text" required class="form-control" name="txtCliente" id="txtCliente" value="<?php echo $venta->fk_idcliente ?>">
+                        <select class="form-control selectpicker    " name="lstCliente" id="lstCliente">
+                            <option value="">Seleccionar</option>
+                        </select>
                     </div>
                     <div class="col-6 form-group">
                         <label for="txtProducto">Producto:</label>
-                        <input type="text" required class="form-control" name="txtProducto" id="txtProducto" value="<?php echo $venta->fk_idproducto ?>">
+                        <select class="form-control selectpicker" name="lstProducto" id="lstProducto">
+                            <option value="">Seleccionar</option>
+                        </select>
                     </div>
                     <div class="col-6 form-group">
                         <label for="txtPrecioUnitario">Precio unitario:</label>

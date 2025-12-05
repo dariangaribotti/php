@@ -6,7 +6,11 @@ class TipoProducto {
     public function __set($name, $value){$this->$name = $value; return $this;}
     public function __get($name){return $this->$name;}
 
-    public function cargarFormulario(){}
+    public function cargarFormulario($request)
+    {
+        $this->idtipoproducto = isset($request["id"]) ? $request["id"] : "";
+        $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
+    }
     public function insertar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 

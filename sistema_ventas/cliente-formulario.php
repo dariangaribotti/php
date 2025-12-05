@@ -12,6 +12,7 @@ $cliente->cargarFormulario($_REQUEST);
 
 $pg = "Listado de clientes";
 
+/*
 if ($_POST) {
     if (isset($_POST["btnGuardar"])) {
         if (isset($_GET["id"]) && $_GET["id"] > 0) {
@@ -36,6 +37,7 @@ if ($_POST) {
         }
     }
 }
+*/
 
 if (isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_GET["id"] > 0) {
     $idProvincia = $_GET["id"];
