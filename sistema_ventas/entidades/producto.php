@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 class Producto {
-    private $idcliente;
+    private $idproducto;
     private $nombre;
     private $cantidad;
     private $precio;
@@ -22,7 +22,15 @@ class Producto {
     public function __set($name, $value){$this->$name = $value; return $this;}
     public function __get($name){return $this->$name;}
 
-    public function cargarFormulario(){}
+    public function cargarFormulario($request){
+        $this->idproducto = isset($request["id"]) ? $request["id"] : "";
+        $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
+        $this->cantidad = isset($request["txtCantidad"]) ? $request["txtCantidad"] : "";
+        $this->precio = isset($request["txtPrecio"]) ? $request["txtPrecio"] : "";
+        $this->descripcion = isset($request["txtDescripcion"]) ? $request["txtDescripcion"] : "";
+        $this->imagen = isset($request["fileImagen"]) ? $request["fileImagen"] : "";
+        $this->fk_idtipoproducto = isset($request["txtTipoProducto"]) ? $request["txtTipoProducto"] : "";
+    }
 
     public function insertar(){
         //Primer paso: Instancia la clase mysqli con el constructor parametrizado
@@ -63,7 +71,7 @@ class Producto {
                 descripcion = '$this->descripcion',
                 imagen = '$this->imagen',
                 fk_idtipoproducto = $this->fk_idtipoproducto,
-                WHERE idproducto = $this->idproducto";
+                WHERE idproducto = " . $this->idproducto;
 
         if(!$mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
@@ -90,11 +98,11 @@ class Producto {
                         descripcion,
                         imagen,
                         fk_idtipoproducto
-                    FROM productos
-                    WHERE idproducto = $this->idproducto";
+                FROM productos
+                WHERE idproducto = " . $this->idproducto;
 
         if(!$resultado = $mysqli->query($sql)){
-            printf("Error en Query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en Query: %s\n", $mysqli->error . " " . $sql);
         }
         //Convierte el resultado en un Array asociativo
         if($fila = $resultado->fetch_assoc()){

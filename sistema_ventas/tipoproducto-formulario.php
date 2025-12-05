@@ -4,25 +4,31 @@ include_once "config.php";
 include_once "entidades/tipoproducto.php";
 
 $tipoproducto = new TipoProducto();
-$tipoproducto->cargarFormulario($_REQUEST);
 
 if(isset($_POST["btnGuardar"])){
-    $tipoproducto = new TipoProducto();
-    $tipoproducto->cargarFormulario($_REQUEST);
-    $tipoproducto->insertar();
-}
 
-if(isset($_POST["btnBorrar"])){
-    $tipoproducto = new TipoProducto();
+    $tipoproducto->cargarFormulario($_REQUEST);
+
+    if(isset($_GET["id"]) && $_GET["id"] > 0){
+        $tipoproducto->actualizar();
+        $msg["texto"] = "Actualizado correctamente";
+        $msg["codigo"] = "alert-success";
+    } else {
+        $tipoproducto->insertar();
+        $msg["texto"] = "Insertado correctamente";
+        $msg["codigo"] = "alert-success";
+     }
+     
+} else if(isset($_POST["btnBorrar"])){
     $tipoproducto->cargarFormulario($_REQUEST);
     $tipoproducto->eliminar();
     header("Location: tipoproducto-listado.php");
 }
 
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $tipoproducto->cargarFormulario($_REQUEST);
     $tipoproducto->obtenerPorId();
 }
-
 
 $pg = "Listado de Productos";
 

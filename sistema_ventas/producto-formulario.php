@@ -5,8 +5,33 @@ include_once "config.php";
 include_once "entidades/producto.php";
 
 $producto = new Producto();
-$pg = "Producto";
 
+if(isset($_POST["btnGuardar"])){
+
+    $producto->cargarFormulario($_REQUEST);
+
+    if((isset($_GET["id"]) && $_GET["id"] > 0 )){
+        $producto->actualizar();
+        $msg["codigo"] = "alert-success";
+        $msg["texto"] = "Actualizado correctamente";
+    } else {
+        $producto->insertar();
+        $msg["codigo"] = "alert-success";
+        $msg["texto"] = "Insertado correctamente";
+    }
+} elseif(isset($_POST["btnBorrar"])){
+    $producto->eliminar();
+    $msg["codigo"] = "alert-danger";
+    $msg["texto"] = "Borrado correctamente";
+    header("Located: producto-listado.php");
+}
+
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $producto->cargarFormulario($_REQUEST);
+    $producto->obtenerPorId();
+}
+
+$pg = "Formulario de producto";
 include_once "header.php";
 ?>
         <!-- Begin Page Content -->
@@ -59,6 +84,10 @@ include_once "header.php";
                     <label for="txtDescripcion">Descripción:</label>
                     <textarea type="text" name="txtDescripcion" id="txtDescripcion"><?php echo $producto->descripcion ?></textarea>
                 </div>
+                <div class="col-6 form-group">
+                    <label for="txtTipoProducto">Nombre:</label>
+                    <input type="text" required class="form-control" name="txtTipoProducto" id="txtTipoProducto" value="<?php echo $producto->nombre ?>">
+                </div>
                 <div class="col-12 form-group"> 
                     <label for="fileImagen">Imagen: </label>
                     <input type="file" class="form-control-file" name="fileImagen" id="fileImagen">
@@ -67,7 +96,6 @@ include_once "header.php";
                             <img src="img/<?php echo $producto->imagen; ?>" alt="Imagen" class="img-thumbnail" style="max-width: 150px;">
                         </div>
                     <?php endif; ?>
-                    
                 </div>
             </div>
 
