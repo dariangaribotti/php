@@ -55,8 +55,6 @@ class Producto {
         if (!$mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
-        var_dump($sql); 
-        exit;
         //Cuarto Paso: Obtener el id generado por la inserción
         $this->idproducto = $mysqli->insert_id;
         //Quinto Paso: Cerrar la conexión

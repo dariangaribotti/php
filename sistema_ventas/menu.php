@@ -49,9 +49,10 @@
         </a>
         <div id="collapseProductos" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="producto-formulario.php">Nuevo producto</a>
             <a class="collapse-item" href="producto-listado.php">Listado de productos</a>
-            <a class="collapse-item" href="tipoproducto-listado.php">Tipo de productos</a>
+            <a class="collapse-item" href="producto-formulario.php">Nuevo producto</a>
+            <a class="collapse-item" href="tipoproducto-listado.php">Listado de tipo productos</a>
+            <a class="collapse-item" href="tipoproducto-formulario.php">Nuevo tipo producto</a>
           </div>
         </div>
       </li>

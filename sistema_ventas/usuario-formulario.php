@@ -7,6 +7,30 @@ include_once "entidades/usuario.php";
 $usuario = new Usuario();
 $pg = "Formulario de usuarios";
 
+if(isset($_POST["btnGuardar"])){
+    $usuario->cargarFormulario($_REQUEST);
+
+    if(isset($_GET["id"]) && $_GET["id"] > 0){
+        $usuario->actualizar();
+        $msg["codigo"] = "alert-success";
+        $msg["texto"] = "Actualizado correctamente";
+    } else {
+        $usuario->insertar();
+        $msg["codigo"] = "alert-success";
+        $msg["texto"] = "Insertado correctamente";
+    }
+} elseif(isset($_POST["btnBorrar"])){
+    $usuario->cargarFormulario($_REQUEST);
+    $usuario->eliminar();
+    $msg["codigo"] = "alert-danger";
+    $msg["texto"] = "Eliminado correctamente";
+}
+
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $usuario->cargarFormulario($_REQUEST);
+    $usuario->obtenerPorId();
+}
+
 include_once "header.php";
 ?>
         <!-- Begin Page Content -->

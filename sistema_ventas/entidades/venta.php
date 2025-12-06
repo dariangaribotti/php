@@ -61,7 +61,7 @@ class Venta {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
 
         $sql = "DELETE FROM ventas
-                WHERE idventa = $this->idventa";
+                WHERE idventa = " . $this->idventa;
 
         if($mysqli->query($sql)){
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
@@ -135,7 +135,7 @@ class Venta {
                     $aResultado[] = $entidadAux;
             }
         }
-        $mysqli->close();
+        return $aResultado;
     }
 }
 
