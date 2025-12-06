@@ -3,8 +3,11 @@
 
 include_once "config.php";
 include_once "entidades/producto.php";
+include_once "entidades/tipoproducto.php";
 
 $producto = new Producto();
+$tipoProducto = new TipoProducto();
+$aTipoProductos = $tipoProducto->obtenerTodos();
 
 if(isset($_POST["btnGuardar"])){
 
@@ -20,6 +23,7 @@ if(isset($_POST["btnGuardar"])){
         $msg["texto"] = "Insertado correctamente";
     }
 } elseif(isset($_POST["btnBorrar"])){
+    $producto->cargarFormulario($_REQUEST);
     $producto->eliminar();
     $msg["codigo"] = "alert-danger";
     $msg["texto"] = "Borrado correctamente";
@@ -59,17 +63,30 @@ include_once "header.php";
             <div class="row">
                 <div class="col-6 form-group">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $producto->nombre ?>">
+                    <input type="text" required class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $producto->nombre; ?>">
                 </div>
                 <div class="col-6 form-group">
                    <label for="txtProducto" class="d-block">Productos: </label>
                    <select class="form-control d-inline" name="txtListaProducto" id="txtListaProducto">
-                        <option value="01">Selected</option>
+                        <option value="" disabled selected>Selected</option>
+                        <?php foreach($aTipoProductos as $tipo): 
+
+                            $seleccionado = "";
+
+                            if($producto->fk_idtipoproducto == $tipo->idtipoproducto){
+                                $seleccionado = "selected";
+                            }
+                            
+                            ?>
+                            <option value="<?php echo $tipo->idtipoproducto; ?>" <?php echo $seleccionado; ?>>
+                                <?php echo $tipo->nombre; ?>
+                            </option>
+                        <?php endforeach; ?>
                    </select>
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtCantidad">Cantidad:</label>
-                    <input type="number" class="form-control" name="txtCantidad" id="txtCantidad" min="0" step="1" value="<?php echo $producto->cantidad ?>">
+                    <input type="number" class="form-control" name="txtCantidad" id="txtCantidad" min="0" step="1" value="<?php echo $producto->cantidad; ?>">
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtPrecio">Precio:</label>
@@ -77,16 +94,12 @@ include_once "header.php";
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                    <input type="number" class="form-control" name="txtPrecio" id="txtPrecio"  min="0" step="1" value="<?php echo $producto->precio ?>">
+                    <input type="number" class="form-control" name="txtPrecio" id="txtPrecio"  min="0" step="1" value="<?php echo $producto->precio; ?>">
                     </div>
                 </div>
                 <div class="col-12 form-group">
                     <label for="txtDescripcion">Descripción:</label>
-                    <textarea type="text" name="txtDescripcion" id="txtDescripcion"><?php echo $producto->descripcion ?></textarea>
-                </div>
-                <div class="col-6 form-group">
-                    <label for="txtTipoProducto">Nombre:</label>
-                    <input type="text" required class="form-control" name="txtTipoProducto" id="txtTipoProducto" value="<?php echo $producto->nombre ?>">
+                    <textarea type="text" name="txtDescripcion" id="txtDescripcion"><?php echo $producto->descripcion; ?></textarea>
                 </div>
                 <div class="col-12 form-group"> 
                     <label for="fileImagen">Imagen: </label>

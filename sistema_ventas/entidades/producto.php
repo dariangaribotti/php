@@ -11,7 +11,7 @@ class Producto {
     private $precio;
     private $descripcion;
     private $imagen;
-    private $fk_idtipoproducto;
+    private $fk_idtipoproducto; 
 
     public function __construct()
     {
@@ -29,7 +29,7 @@ class Producto {
         $this->precio = isset($request["txtPrecio"]) ? $request["txtPrecio"] : "";
         $this->descripcion = isset($request["txtDescripcion"]) ? $request["txtDescripcion"] : "";
         $this->imagen = isset($request["fileImagen"]) ? $request["fileImagen"] : "";
-        $this->fk_idtipoproducto = isset($request["txtTipoProducto"]) ? $request["txtTipoProducto"] : "";
+        $this->fk_idtipoproducto = isset($request["txtListaProducto"]) ? $request["txtListaProducto"] : "";
     }
 
     public function insertar(){
@@ -50,11 +50,13 @@ class Producto {
                     '$this->descripcion',
                     '$this->imagen',
                     $this->fk_idtipoproducto
-                );";
+                )";
         //Tercer paso: Ejecuta la query
         if (!$mysqli->query($sql)){
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
+        var_dump($sql); 
+        exit;
         //Cuarto Paso: Obtener el id generado por la inserción
         $this->idproducto = $mysqli->insert_id;
         //Quinto Paso: Cerrar la conexión
@@ -70,7 +72,7 @@ class Producto {
                 precio = $this->precio,
                 descripcion = '$this->descripcion',
                 imagen = '$this->imagen',
-                fk_idtipoproducto = $this->fk_idtipoproducto,
+                fk_idtipoproducto = $this->fk_idtipoproducto
                 WHERE idproducto = " . $this->idproducto;
 
         if(!$mysqli->query($sql)){
@@ -82,13 +84,17 @@ class Producto {
     public function eliminar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
-        $sql = "DELETE FROM productos WHERE idproducto = " . $this->idproducto;
+        $sql = "DELETE FROM 
+                    productos 
+                WHERE idproducto = " . $this->idproducto;
 
         if(!$mysqli->query($sql)){
             printf("Error en Query: %s\n", $mysqli->error . " " . $sql);
         }
-    }
 
+        $mysqli->close();
+
+    }
     public function obtenerPorId(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idproducto,
