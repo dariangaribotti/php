@@ -14,10 +14,40 @@ if(isset($_POST["btnGuardar"])){
     $producto->cargarFormulario($_REQUEST);
 
     if((isset($_GET["id"]) && $_GET["id"] > 0 )){
+        if($_FILES["fileImagen"]["error"] === UPLOAD_ERR_OK){
+        $nombre = date("Ymdhmsi") . rand(1000, 2000); 
+        $archivo_tmp = $_FILES["fileImagen"]["tmp_name"];
+        $extension = pathinfo($_FILES["fileImagen"]["name"], PATHINFO_EXTENSION);
+        if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
+            $nombreImagen = "$nombre.$extension";
+            move_uploaded_file($archivo_tmp, "file/$nombreImagen");
+            }
+        }
+
+        $producto->imagen = $nombreImagen;
+
+        if($producto->imagen != "" && file_exists("file/" . $producto->imagen)){
+            unlink("file/" . $producto->imagen);
+        } else {
+            $nombreImagen = $producto->imagen;
+        }
+
+
         $producto->actualizar();
         $msg["codigo"] = "alert-success";
         $msg["texto"] = "Actualizado correctamente";
+
     } else {
+        if($_FILES["fileImagen"]["error"] === UPLOAD_ERR_OK){
+        $nombre = date("Ymdhmsi") . rand(1000, 2000); 
+        $archivo_tmp = $_FILES["fileImagen"]["tmp_name"];
+        $extension = pathinfo($_FILES["fileImagen"]["name"], PATHINFO_EXTENSION);
+        if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
+            $nombreImagen = "$nombre.$extension";
+            move_uploaded_file($archivo_tmp, "file/$nombreImagen");
+            }
+        }
+        $producto->imagen = $nombreImagen;
         $producto->insertar();
         $msg["codigo"] = "alert-success";
         $msg["texto"] = "Insertado correctamente";
@@ -103,10 +133,11 @@ include_once "header.php";
                 </div>
                 <div class="col-12 form-group"> 
                     <label for="fileImagen">Imagen: </label>
-                    <input type="file" class="form-control-file" name="fileImagen" id="fileImagen">
+                    <input type="file" class="form-control-file" name="fileImagen" id="fileImagen" accept=".jpeg, .jpg, .png">
+                    <small>Archivos admitidos: jpeg jpg png</small>
                     <?php if($producto->imagen != ""): ?>   
                         <div class="mt-2">
-                            <img src="img/<?php echo $producto->imagen; ?>" alt="Imagen" class="img-thumbnail" style="max-width: 150px;">
+                            <img src="file/<?php echo $producto->imagen; ?>" alt="Imagen" class="img-thumbnail" style="max-width: 150px;">
                         </div>
                     <?php endif; ?>
                 </div>
