@@ -2,6 +2,12 @@
 
 include_once "config.php";
 include_once "entidades/producto.php";
+
+if(isset($_GET["do"]) && $_GET["do"] == "eliminar" ){
+    unset($aProductos[$pos]);
+    header("location: producto-listado.php");
+}
+
 $pg = "Listado de productos";
 
 $producto = new Producto();
@@ -28,7 +34,7 @@ include_once("header.php");
                 <th>Imagen</th>
                 <th>fk_idtipoproducto</th>
             </tr>
-            <?php foreach($aProductos as $producto): ?>
+            <?php foreach($aProductos as $pos => $producto): ?>
             <tr>
                 <td><?php echo $producto->nombre; ?></td>
                 <td><?php echo $producto->cantidad; ?></td>
@@ -38,6 +44,9 @@ include_once("header.php");
                 <td><?php echo $producto->fk_idtipoproducto; ?></td>
                 <td style="width: 110px;">
                     <a href="producto-formulario.php?id=<?php echo $producto->idproducto; ?>"><i class="fas fa-search"></i></a>
+                </td>
+                <td style="width: 110px;">
+                    <a href="producto-listado.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="fa-solid fa-xmark"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>

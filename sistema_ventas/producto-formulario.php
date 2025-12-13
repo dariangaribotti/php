@@ -1,6 +1,8 @@
 
 <?php
 
+use Mpdf\Tag\Li;
+
 include_once "config.php";
 include_once "entidades/producto.php";
 include_once "entidades/tipoproducto.php";
@@ -22,9 +24,16 @@ if(isset($_POST["btnGuardar"])){
             $nombreImagen = "$nombre.$extension";
             move_uploaded_file($archivo_tmp, "file/$nombreImagen");
             }
+            $producto->imagen = $nombreImagen;
+        } else {
+            $productoAnt = new Producto();
+            $productoAnt->idproducto = $_GET["id"];
+            $productoAnt->obtenerPorId();
+            $producto->imagen = $productoAnt->imagen;
         }
 
         $producto->actualizar();
+
         $msg["codigo"] = "alert-success";
         $msg["texto"] = "Actualizado correctamente";
 
@@ -36,8 +45,9 @@ if(isset($_POST["btnGuardar"])){
         if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
             $nombreImagen = "$nombre.$extension";
             move_uploaded_file($archivo_tmp, "file/$nombreImagen");
-            $producto->imagen = $nombreImagen;
+            
             }
+        $producto->imagen = $nombreImagen;
         }
         $producto->insertar();
         $msg["codigo"] = "alert-success";
