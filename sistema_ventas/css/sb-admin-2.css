@@ -10211,6 +10211,10 @@ a:focus {
   z-index: 1;
 }
 
+#sidebarToggle {
+    
+}
+
 .sidebar .sidebar-brand .sidebar-brand-icon i {
   font-size: 2rem;
 }
@@ -10220,7 +10224,7 @@ a:focus {
 }
 
 .sidebar hr.sidebar-divider {
-  margin: 0 1rem 1rem;
+  margin: 0 3rem 1rem;
 }
 
 .sidebar .sidebar-heading {

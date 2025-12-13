@@ -1,8 +1,8 @@
 <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="far fa-credit-card"></i>
         </div>
@@ -97,4 +97,33 @@
       </div>
 
     </ul>
+    <script>
+
+    
+(function($) {
+            "use strict"; // Start of use strict
+
+            // Alternar el menú lateral
+            $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
+                e.preventDefault();
+                $("body").toggleClass("sidebar-toggled");
+                $(".sidebar").toggleClass("toggled");
+                
+                // Si el menú se cierra, colapsar también los submenús abiertos
+                if ($(".sidebar").hasClass("toggled")) {
+                    $('.sidebar .collapse').collapse('hide');
+                };
+            });
+
+            // Prevenir el scroll en el contenido si la ventana es muy pequeña
+            $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
+                if ($(window).width() > 768) {
+                    var e0 = e.originalEvent,
+                        delta = e0.wheelDelta || -e0.detail;
+                    this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+                    e.preventDefault();
+                }
+            });
+        })(jQuery); // End of use strict
+    </script>
     <!-- End of Sidebar -->

@@ -32,7 +32,6 @@ if(isset($_POST["btnGuardar"])){
             $nombreImagen = $producto->imagen;
         }
 
-
         $producto->actualizar();
         $msg["codigo"] = "alert-success";
         $msg["texto"] = "Actualizado correctamente";
