@@ -24,14 +24,6 @@ if(isset($_POST["btnGuardar"])){
             }
         }
 
-        $producto->imagen = $nombreImagen;
-
-        if($producto->imagen != "" && file_exists("file/" . $producto->imagen)){
-            unlink("file/" . $producto->imagen);
-        } else {
-            $nombreImagen = $producto->imagen;
-        }
-
         $producto->actualizar();
         $msg["codigo"] = "alert-success";
         $msg["texto"] = "Actualizado correctamente";
@@ -44,9 +36,9 @@ if(isset($_POST["btnGuardar"])){
         if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
             $nombreImagen = "$nombre.$extension";
             move_uploaded_file($archivo_tmp, "file/$nombreImagen");
+            $producto->imagen = $nombreImagen;
             }
         }
-        $producto->imagen = $nombreImagen;
         $producto->insertar();
         $msg["codigo"] = "alert-success";
         $msg["texto"] = "Insertado correctamente";
