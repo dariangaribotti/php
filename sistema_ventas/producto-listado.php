@@ -3,21 +3,35 @@
 include_once "config.php";
 include_once "entidades/producto.php";
 
-if(isset($_GET["do"]) && $_GET["do"] == "eliminar" ){
-    unset($aProductos[$pos]);
-    header("location: producto-listado.php");
-}
-
 $pg = "Listado de productos";
 
 $producto = new Producto();
 $aProductos = $producto->obtenerTodos();
+
+if(isset($_GET["do"]) && $_GET["do"] == "eliminar" ){
+    $pos = $_GET["pos"];
+    $producto = new Producto();
+    $producto->idproducto = $aProductos[$pos]->idproducto;
+    $producto->eliminar();
+    $msg["codigo"] = "alert-danger";
+    $msg["texto"] = "Borrado correctamente";
+    header("Located: producto-listado.php");
+}
 
 include_once("header.php"); 
 ?>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <?php if (isset($msg)): ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert <?php echo $msg["codigo"]; ?>" role="alert">
+                        <?php echo $msg["texto"]; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endif;?>
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Listado de productos</h1>
           <div class="row">
@@ -45,8 +59,8 @@ include_once("header.php");
                 <td style="width: 110px;">
                     <a href="producto-formulario.php?id=<?php echo $producto->idproducto; ?>"><i class="fas fa-search"></i></a>
                 </td>
-                <td style="width: 110px;">
-                    <a href="producto-listado.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="fa-solid fa-xmark"></i></a>
+                <td>
+                    <a href="producto-listado.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>
