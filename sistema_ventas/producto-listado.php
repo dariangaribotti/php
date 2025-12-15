@@ -13,8 +13,6 @@ if(isset($_GET["do"]) && $_GET["do"] == "eliminar" ){
     $producto = new Producto();
     $producto->idproducto = $aProductos[$pos]->idproducto;
     $producto->eliminar();
-    $msg["codigo"] = "alert-danger";
-    $msg["texto"] = "Borrado correctamente";
     header("Located: producto-listado.php");
 }
 

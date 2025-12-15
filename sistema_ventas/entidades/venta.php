@@ -12,6 +12,15 @@ class Venta {
     public function __set($name, $value){$this->$name = $value; return $this;}
     public function __get($name){return $this->$name;}
 
+    public function cargarFormulario($request){
+        $this->idventa = isset($request["id"]) ? $request["id"] : "";
+        $this->fk_idcliente = isset($request["fk_idcliente"]) ? $request["fk_idcliente"] : "";
+        $this->fk_idproducto = isset($request["fk_idproducto"]) ? $request["fk_idproducto"] : '';
+        $this->fecha = isset($request["fecha"]) ? $request["fecha"] : "";
+        $this->cantidad = isset($request["cantidad"]) ? $request["cantidad"] : "";
+        $this->preciounitario = isset($request["preciounitario"]) ? $request["preciounitario"] : "";
+        $this->total = isset($request["total"]) ? $request["total"] : "";
+    }
     public function insertar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
@@ -32,7 +41,7 @@ class Venta {
                     )";
 
         if(!$mysqli->query($sql)){
-            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         $this->idventa = $mysqli->insert_id;
@@ -40,7 +49,7 @@ class Venta {
         $mysqli->close();
     }
     public function actualizar(){
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
         $sql = "UPDATE ventas SET
                     fk_idcliente = $this->fk_idcliente,
@@ -52,13 +61,13 @@ class Venta {
                 WHERE idventa = " . $this->idventa;
             
         if(!$mysqli->query($sql)){
-            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+            printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         $mysqli->close();
     }
     public function eliminar(){
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
         $sql = "DELETE FROM ventas
                 WHERE idventa = " . $this->idventa;
@@ -68,7 +77,7 @@ class Venta {
         }
     }
     public function obtenerPorId(){
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
         $sql = "SELECT idventa,
                         fk_idcliente,
@@ -102,7 +111,7 @@ class Venta {
     }
         
     public function obtenerTodos(){
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_NOMBRE, Config::BBDD_CLAVE, Config::BBDD_PORT);
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
 
         $sql = "SELECT idventa,
                         fk_idcliente,

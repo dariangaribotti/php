@@ -3,8 +3,41 @@
 
 include_once "config.php";
 include_once "entidades/venta.php";
+include_once "entidades/cliente.php";
+include_once "entidades/producto.php";
 
 $venta = new Venta();
+
+$producto = new Producto();
+$aProductos = $producto->obtenerTodos();
+
+$cliente = new Cliente();
+$aClientes = $cliente->obtenerTodos();
+
+if(isset($_POST["btnGuardar"])){
+    $venta->cargarFormulario($_REQUEST);
+
+    if(isset($_GET["id"]) && $_GET["id"] > 0){
+        $venta->actualizar();
+        $msg["codigo"] = "alert-success";
+        $msg["texto"] = "Actualizado correctamente";
+    } else {
+        $venta->insertar();
+        $msg["codigo"] = "alert-success";
+        $msg["texto"] = "Insertado correctamente";        
+    }
+} if(isset($_POST["btnBorrar"])){
+    $venta->cargarFormulario($_REQUEST);
+    $venta->eliminar();
+    $msg["codigo"] = "alert-danger";
+    $msg["texto"] = "Eliminado correctamente";   
+}
+
+if(isset($_GET["id"]) && $_GET["id"] > 0){
+    $venta->cargarFormulario($_REQUEST);
+    $venta->obtenerPorId();
+}
+
 $pg = "Formulario de ventas";
 
 include_once "header.php";
@@ -47,14 +80,41 @@ include_once "header.php";
                 </div>
                     <div class="col-6 form-group">
                         <label for="txtCliente">Cliente:</label>
-                        <select class="form-control selectpicker    " name="lstCliente" id="lstCliente">
+                        <select class="form-control selectpicker" name="lstCliente" id="lstCliente">
                             <option value="">Seleccionar</option>
+                            <?php foreach($aClientes as $cliente): 
+                                
+                                $select2 = "";
+
+                                if($venta->fk_idtipoproducto == $cliente->idcliente){
+                                    $select2 = "selected";
+                                }
+
+                            ?>
+                                <option class="form-control" value="<?php echo $cliente->idcliente ?>" <?php echo $select2 ?>>
+                                    <?php echo $cliente->nombre; ?>
+                                </option>
+
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="col-6 form-group">
                         <label for="txtProducto">Producto:</label>
                         <select class="form-control selectpicker" name="lstProducto" id="lstProducto">
                             <option value="">Seleccionar</option>
+                            <?php foreach($aProductos as $producto):
+                                    
+                                $select1 = "";
+
+                                if($venta->fk_idtipoproducto == $producto->idtipoproducto){
+                                    $seleccionado = "selected";
+                                }
+                            ?>
+                                <option class="form-control" value="<?php echo $producto->idproducto ?>" <?php echo $select1 ?>>
+                                    <?php echo $producto->nombre; ?>
+                                </option>
+
+                            <?php endforeach; ?>                            
                         </select>
                     </div>
                     <div class="col-6 form-group">
