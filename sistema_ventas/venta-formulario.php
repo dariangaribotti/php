@@ -7,6 +7,7 @@ include_once "entidades/cliente.php";
 include_once "entidades/producto.php";
 
 $venta = new Venta();
+$aVentas = $venta->obtenerTodos();
 
 $producto = new Producto();
 $aProductos = $producto->obtenerTodos();
@@ -69,6 +70,24 @@ include_once "header.php";
                     <label for="txtFechaNac" class="d-block">Fecha y hora:</label>
                     <select class="form-control d-inline"  name="txtDiaNac" id="txtDiaNac" style="width: 80px">
                         <option selected="" disabled="">DD</option>
+                            <?php if($venta->fecha != ""): 
+
+                            $str = strtotime($venta->fecha);
+                            $time = date("d", $str);
+
+                            $seleccionado = "";
+
+                            if($dia == $venta->idventa){
+                                $seleccionado = "selected";
+                            }
+
+                            ?>
+                            <?php foreach(range(1, 31) as $dia): ?>
+                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
+                                    <?php echo $dia . "\n"; ?>
+                            </option>
+                            <?php endforeach; 
+                                endif; ?>
                     </select>
                     <select class="form-control d-inline"  name="txtMesNac" id="txtMesNac" style="width: 80px">
                         <option selected="" disabled="">MM</option>
@@ -84,14 +103,14 @@ include_once "header.php";
                             <option value="">Seleccionar</option>
                             <?php foreach($aClientes as $cliente): 
                                 
-                                $select2 = "";
+                                $seleccionado = "";
 
-                                if($venta->fk_idtipoproducto == $cliente->idcliente){
-                                    $select2 = "selected";
+                                if($venta->fk_idcliente == $cliente->idcliente){
+                                    $seleccionado = "selected";
                                 }
 
                             ?>
-                                <option class="form-control" value="<?php echo $cliente->idcliente ?>" <?php echo $select2 ?>>
+                                <option class="form-control" value="<?php echo $cliente->idcliente ?>" <?php echo $seleccionado ?>>
                                     <?php echo $cliente->nombre; ?>
                                 </option>
 
@@ -104,13 +123,13 @@ include_once "header.php";
                             <option value="">Seleccionar</option>
                             <?php foreach($aProductos as $producto):
                                     
-                                $select1 = "";
+                                $seleccionado = "";
 
                                 if($venta->fk_idtipoproducto == $producto->idtipoproducto){
                                     $seleccionado = "selected";
                                 }
                             ?>
-                                <option class="form-control" value="<?php echo $producto->idproducto ?>" <?php echo $select1 ?>>
+                                <option class="form-control" value="<?php echo $producto->idproducto ?>" <?php echo $seleccionado ?>>
                                     <?php echo $producto->nombre; ?>
                                 </option>
 
