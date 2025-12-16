@@ -14,12 +14,14 @@ class Venta {
 
     public function cargarFormulario($request){
         $this->idventa = isset($request["id"]) ? $request["id"] : "";
-        $this->fk_idcliente = isset($request["fk_idcliente"]) ? $request["fk_idcliente"] : "";
-        $this->fk_idproducto = isset($request["fk_idproducto"]) ? $request["fk_idproducto"] : '';
-        $this->fecha = isset($request["fecha"]) ? $request["fecha"] : "";
-        $this->cantidad = isset($request["cantidad"]) ? $request["cantidad"] : "";
-        $this->preciounitario = isset($request["preciounitario"]) ? $request["preciounitario"] : "";
-        $this->total = isset($request["total"]) ? $request["total"] : "";
+        $this->fk_idcliente = isset($request["lstCliente"]) ? $request["lstCliente"] : "";
+        $this->fk_idproducto = isset($request["lstProducto"]) ? $request["lstProducto"] : '';
+        if(isset($request["txtAnioNac"]) && isset($request["txtMesNac"]) && isset($request["txtDiaNac"])){
+            $this->fecha = $request["txtAnioNac"] . "-" . $request["txtMesNac"] . "-" . $request["txtDiaNac"] . " " . $request["txtHora"];
+        }
+        $this->cantidad = isset($request["txtCantidad"]) ? $request["txtCantidad"] : "";
+        $this->preciounitario = isset($request["txtPrecioUnitario"]) ? $request["txtPrecioUnitario"] : "";
+        $this->total = isset($request["txtTotal"]) ? $request["txtTotal"] : "";
     }
     public function insertar(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);

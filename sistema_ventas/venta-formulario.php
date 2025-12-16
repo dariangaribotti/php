@@ -71,91 +71,76 @@ include_once "header.php";
                     <label for="txtFechaNac" class="d-block">Fecha y hora:</label>
                     <select class="form-control d-inline"  name="txtDiaNac" id="txtDiaNac" style="width: 80px">
                         <option selected="" disabled="">DD</option>
-                            <?php if($venta->fecha != ""): 
-
-                            foreach(range(1, 31) as $dia):
-
+                        <?php 
+                        if(!empty($venta->fecha)){
                             $str = strtotime($venta->fecha);
                             $time = date("d", $str);
+                        } else {
+                            $time = date("d");
+                        }
 
+                        for($i = 1; $i <= 31; $i++): 
                             $seleccionado = "";
-
-                            if($time == $dia){
-                                $seleccionado = "selected";
-                            }
-
-                            ?>
                             
-                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
-                                    <?php echo $dia . "\n"; ?>
+                            if($i == $time){
+                                $seleccionado = "selected";
+                            } else {
+                                $seleccionado = "";
+                            }
+                            
+                        ?>
+                            <option value="<?php echo $i; ?>" <?php echo $seleccionado; ?>>
+                            <?php echo $i; ?>
                             </option>
-                            <?php endforeach; 
-                                endif; ?>
+                        <?php endfor; ?>
                     </select>
                     <select class="form-control d-inline"  name="txtMesNac" id="txtMesNac" style="width: 80px">
                         <option selected="" disabled="">MM</option>
-                            <?php if($venta->fecha != ""): 
-
-                            foreach(range(1, 12) as $mes):
-                                
+                        <?php 
+                        if(!empty($venta->fecha)){
                             $str = strtotime($venta->fecha);
                             $time = date("m", $str);
+                        } else {
+                            $time = date("m");
+                        }
+                        
+                        for($i = 1; $i <= 12; $i++):
+                        $seleccionado = "";
 
-                            $seleccionado = "";
-
-                            if($time == $mes){
+                            if($i == $time){
                                 $seleccionado = "selected";
                             }
-
-                            ?>
-                            
-                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
-                                    <?php echo $mes . "\n"; ?>
+                        ?>
+                            <option value="<?php echo $i; ?>" <?php echo $seleccionado; ?>>
+                                <?php echo $i; ?>
                             </option>
-                            <?php endforeach; 
-                                endif; ?>
-                    </select>
+                        <?php endfor; ?>
                     </select>
                     <select class="form-control d-inline"  name="txtAnioNac" id="txtAnioNac" style="width: 100px">
-                        <option selected="" disabled="">YYYY</option>
-                            <?php if($venta->fecha != ""): 
-
-                            foreach(range(1900, 2025) as $anio):
-                                
+                    <option selected="" disabled="">YYYY</option>
+                    <?php 
+                        if(!empty($venta->fecha)){
                             $str = strtotime($venta->fecha);
                             $time = date("Y", $str);
+                        } else {
+                            $time = date("Y");
+                        }
 
-                            $seleccionado = "";
+                        for($i = 2000; $i <= date("Y"); $i++):
+                        $seleccionado = "";
 
-                            if($time == $anio){
-                                $seleccionado = "selected";
-                            }
+                        if($i == $time){
+                            $seleccionado = "selected";
+                        }
+                    ?>        
+                        <option value="<?php echo $i; ?>" <?php echo $seleccionado; ?>>
+                            <?php echo $i; ?>
+                        </option>
+                    <?php endfor; ?>
 
-                            ?>
-                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
-                                    <?php echo $anio . "\n"; ?>
-                            </option>
-                            <?php endforeach; 
-                                endif; ?>
                     </select>
-                    <input type="time" class="form-control d-inline" name="txtHora" id="txtHora" style="width: 120px;" value="00:00">
+                    <input type="time" class="form-control d-inline" name="txtHora" id="txtHora" style="width: 120px;" value="<?php echo date("H:i"); ?>">
                     <option selected="" disabled=""></option>
-                            <?php if($venta->fecha != ""): 
-                                
-                            $str = strtotime($venta->fecha);
-                            $time = date("H:i", $str);
-
-                            $seleccionado = "";
-
-                            if($time == $time){
-                                $seleccionado = "selected";
-                            }
-
-                            ?>
-                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
-                                    <?php echo $time . "\n"; ?>
-                            </option>
-                            <?php endif; ?>
                 </div>
                     <div class="col-6 form-group">
                         <label for="txtCliente">Cliente:</label>
