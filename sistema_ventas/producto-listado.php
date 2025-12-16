@@ -10,10 +10,9 @@ $aProductos = $producto->obtenerTodos();
 
 if(isset($_GET["do"]) && $_GET["do"] == "eliminar" ){
     $pos = $_GET["pos"];
-    $producto = new Producto();
     $producto->idproducto = $aProductos[$pos]->idproducto;
     $producto->eliminar();
-    header("Located: producto-listado.php");
+    header("Location: producto-listado.php");
 }
 
 include_once("header.php"); 
