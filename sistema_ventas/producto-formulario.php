@@ -1,8 +1,6 @@
 
 <?php
 
-use Mpdf\Tag\Li;
-
 include_once "config.php";
 include_once "entidades/producto.php";
 include_once "entidades/tipoproducto.php";
@@ -15,17 +13,26 @@ if(isset($_POST["btnGuardar"])){
 
     $producto->cargarFormulario($_REQUEST);
 
+    //Estoy actualizando
     if((isset($_GET["id"]) && $_GET["id"] > 0 )){
         if($_FILES["fileImagen"]["error"] === UPLOAD_ERR_OK){
         $nombre = date("Ymdhmsi") . rand(1000, 2000); 
         $archivo_tmp = $_FILES["fileImagen"]["tmp_name"];
         $extension = pathinfo($_FILES["fileImagen"]["name"], PATHINFO_EXTENSION);
+        $nombreImagen = "$nombre.$extension";
         if($extension == "jpg" || $extension == "jpeg" || $extension == "png"){
-            $nombreImagen = "$nombre.$extension";
+            //Elimino la imagen anterior
+            $productoAnt = new Producto();
+            $productoAnt->idproducto = $_GET["id"];
+            $productoAnt->obtenerPorId();
+            if(file_exists("file/$productoAnt->imagen")){
+                unlink("file/$productoAnt->imagen");
+            }
+            //Subo la imagen nueva
             move_uploaded_file($archivo_tmp, "file/$nombreImagen");
             }
-            $producto->imagen = $nombreImagen;
-        } else {
+        $producto->imagen = $nombreImagen;
+        } else { //Estoy manteniendo la imagen
             $productoAnt = new Producto();
             $productoAnt->idproducto = $_GET["id"];
             $productoAnt->obtenerPorId();
@@ -55,10 +62,12 @@ if(isset($_POST["btnGuardar"])){
     }
 } elseif(isset($_POST["btnBorrar"])){
     $producto->cargarFormulario($_REQUEST);
+    $producto->obtenerPorId();
+    if(file_exists("file/$producto->imagen")){
+        unlink("file/$producto->imagen");
+    }
     $producto->eliminar();
-    $msg["codigo"] = "alert-danger";
-    $msg["texto"] = "Borrado correctamente";
-    header("Located: producto-listado.php");
+    header("Location: producto-listado.php");
 }
 
 if(isset($_GET["id"]) && $_GET["id"] > 0){

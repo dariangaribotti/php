@@ -72,17 +72,19 @@ include_once "header.php";
                         <option selected="" disabled="">DD</option>
                             <?php if($venta->fecha != ""): 
 
+                            foreach(range(1, 31) as $dia):
+
                             $str = strtotime($venta->fecha);
                             $time = date("d", $str);
 
                             $seleccionado = "";
 
-                            if($dia == $venta->idventa){
+                            if($time == $dia){
                                 $seleccionado = "selected";
                             }
 
                             ?>
-                            <?php foreach(range(1, 31) as $dia): ?>
+                            
                             <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
                                     <?php echo $dia . "\n"; ?>
                             </option>
@@ -91,11 +93,68 @@ include_once "header.php";
                     </select>
                     <select class="form-control d-inline"  name="txtMesNac" id="txtMesNac" style="width: 80px">
                         <option selected="" disabled="">MM</option>
+                            <?php if($venta->fecha != ""): 
+
+                            foreach(range(1, 12) as $mes):
+                                
+                            $str = strtotime($venta->fecha);
+                            $time = date("m", $str);
+
+                            $seleccionado = "";
+
+                            if($time == $mes){
+                                $seleccionado = "selected";
+                            }
+
+                            ?>
+                            
+                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
+                                    <?php echo $mes . "\n"; ?>
+                            </option>
+                            <?php endforeach; 
+                                endif; ?>
+                    </select>
                     </select>
                     <select class="form-control d-inline"  name="txtAnioNac" id="txtAnioNac" style="width: 100px">
                         <option selected="" disabled="">YYYY</option>
+                            <?php if($venta->fecha != ""): 
+
+                            foreach(range(1900, 2025) as $anio):
+                                
+                            $str = strtotime($venta->fecha);
+                            $time = date("Y", $str);
+
+                            $seleccionado = "";
+
+                            if($time == $anio){
+                                $seleccionado = "selected";
+                            }
+
+                            ?>
+                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
+                                    <?php echo $anio . "\n"; ?>
+                            </option>
+                            <?php endforeach; 
+                                endif; ?>
                     </select>
                     <input type="time" class="form-control d-inline" name="txtHora" id="txtHora" style="width: 120px;" value="00:00">
+                    <option selected="" disabled=""></option>
+                            <?php if($venta->fecha != ""): 
+                                
+                            $str = strtotime($venta->fecha);
+                            $time = date("H:i", $str);
+
+                            $seleccionado = "";
+
+                            if($time == $time){
+                                $seleccionado = "selected";
+                            }
+
+                            ?>
+                            <option value="<?php echo $venta->idventa; ?>" <?php echo $seleccionado; ?>>
+                                    <?php echo $time . "\n"; ?>
+                            </option>
+                            <?php endif; ?>
                 </div>
                     <div class="col-6 form-group">
                         <label for="txtCliente">Cliente:</label>
