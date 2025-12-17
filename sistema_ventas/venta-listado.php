@@ -21,20 +21,18 @@ include_once("header.php");
             </div>
           <table class="table table-hover border">
             <tr>
-                <th>Cliente</th>
-                <th>Tipo de producto</th>
                 <th>Fecha</th>
                 <th>Cantidad</th>
-                <th>Precio unitario</th>
+                <th>Producto</th>
+                <th>Cliente</th>
                 <th>Total</th>
             </tr>
             <?php foreach ($aVentas as $venta): ?>
               <tr>
-                  <td><?php echo $venta->fk_idcliente; ?></td>
-                  <td><?php echo $venta->fk_idproducto; ?></td>
                   <td><?php echo $venta->fecha; ?></td>
                   <td><?php echo $venta->cantidad; ?></td>
-                  <td><?php echo $venta->preciounitario; ?></td>
+                  <td><?php echo $venta->fk_idproducto; ?></td>
+                  <td><?php echo $venta->fk_idcliente; ?></td>
                   <td><?php echo $venta->total; ?></td>
                   <td style="width: 110px;">
                       <a href="venta-formulario.php?id=<?php echo $venta->idventa; ?>"><i class="fas fa-search"></i></a>   
