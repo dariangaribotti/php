@@ -31,8 +31,8 @@ include_once("header.php");
               <tr>
                   <td><?php echo $venta->fecha; ?></td>
                   <td><?php echo $venta->cantidad; ?></td>
-                  <td><?php echo $venta->nombre_producto; ?></td>
-                  <td><?php echo $venta->nombre_cliente; ?></td>
+                  <td><a href="venta-listado.php?id=<?php echo $venta->fk_idproducto; ?>"><?php echo $venta->nombre_producto; ?></a></td>
+                  <td><a href="venta-listado.php?id=<?php echo $venta->fk_idcliente ?>"><?php echo $venta->nombre_cliente; ?></a></td>
                   <td><?php echo $venta->total; ?></td>
                   <td style="width: 110px;">
                       <a href="venta-formulario.php?id=<?php echo $venta->idventa; ?>"><i class="fas fa-search"></i></a>   

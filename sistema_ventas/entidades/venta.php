@@ -178,7 +178,7 @@ class Venta {
             $aResultado = array();
 
             if($resultado){
-                if($fila = $resultado->fetch_assoc()){
+                while($fila = $resultado->fetch_assoc()){
                     $entidadAux = new Venta();
                     $entidadAux->idventa = $fila["idventa"];
                     $entidadAux->fecha = $fila["fecha"];

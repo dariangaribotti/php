@@ -9,13 +9,6 @@ include_once "entidades/producto.php";
 $venta = new Venta();
 $aVentas = $venta->obtenerTodos();
 
-$cliente = new Cliente();
-$aClientes = $cliente->obtenerTodos();
-
-$producto = new Producto();
-$aProductos = $producto->obtenerTodos();
-
-
 if(isset($_POST["btnGuardar"])){
     $venta->cargarFormulario($_REQUEST);
 
@@ -39,6 +32,12 @@ if(isset($_GET["id"]) && $_GET["id"] > 0){
     $venta->cargarFormulario($_REQUEST);
     $venta->obtenerPorId();
 }
+
+$cliente = new Cliente();
+$aClientes = $cliente->obtenerTodos();
+
+$producto = new Producto();
+$aProductos = $producto->obtenerTodos();
 
 $pg = "Formulario de ventas";
 
