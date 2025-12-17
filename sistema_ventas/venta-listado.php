@@ -5,7 +5,7 @@ include_once "entidades/venta.php";
 $pg = "Listado de ventas";
 
 $venta = new Venta();
-$aVentas = $venta->obtenerTodos();
+$aVentas = $venta->cargarGrilla();
 
 include_once("header.php"); 
 ?>
@@ -31,8 +31,8 @@ include_once("header.php");
               <tr>
                   <td><?php echo $venta->fecha; ?></td>
                   <td><?php echo $venta->cantidad; ?></td>
-                  <td><?php echo $venta->fk_idproducto; ?></td>
-                  <td><?php echo $venta->fk_idcliente; ?></td>
+                  <td><?php echo $venta->nombre_producto; ?></td>
+                  <td><?php echo $venta->nombre_cliente; ?></td>
                   <td><?php echo $venta->total; ?></td>
                   <td style="width: 110px;">
                       <a href="venta-formulario.php?id=<?php echo $venta->idventa; ?>"><i class="fas fa-search"></i></a>   
