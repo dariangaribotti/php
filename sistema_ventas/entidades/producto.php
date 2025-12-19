@@ -1,5 +1,7 @@
 <?php
 
+use Mpdf\Tag\P;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -93,6 +95,41 @@ class Producto {
         $mysqli->close();
 
     }
+
+    public function obtenerPorTipo($idTipoProducto){
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
+
+        $sql = "SELECT idproducto,
+                        nombre,
+                        cantidad,
+                        precio,
+                        descripcion,
+                        imagen,
+                        fk_idtipoproducto
+                    FROM productos
+                    WHERE fk_idtipoproducto = " . $idTipoProducto;
+                    
+        if(!$resultado = $mysqli->query($sql)){
+            printf("Error en query%s\n", $mysqli->error . " " . $sql);
+        }
+
+        $aResultado = array();
+
+        while($fila = $resultado->fetch_assoc()){
+            $entidadAux = new Producto();
+            $entidadAux->idproducto = $fila["idproducto"];
+            $entidadAux->nombre = $fila["nombre"];
+            $entidadAux->cantidad = $fila["cantidad"];
+            $entidadAux->precio = $fila["precio"];
+            $entidadAux->descripcion = $fila["descripcion"];
+            $entidadAux->imagen = $fila["imagen"];
+            $entidadAux->fk_idtipoproducto = $fila["fk_idtipoproducto"];
+            $aResultado[] = $entidadAux;
+
+        }
+        return $aResultado;
+    }
+
     public function obtenerPorId(){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idproducto,

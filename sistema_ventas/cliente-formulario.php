@@ -10,9 +10,12 @@ include_once "entidades/localidad.php";
 $cliente = new Cliente();
 $cliente->cargarFormulario($_REQUEST);
 
+$localidad = new Localidad();
+$aLocalidades = $localidad->obtenerTodos();
+
 $pg = "Listado de clientes";
 
-/*
+
 if ($_POST) {
     if (isset($_POST["btnGuardar"])) {
         if (isset($_GET["id"]) && $_GET["id"] > 0) {
@@ -37,7 +40,7 @@ if ($_POST) {
         }
     }
 }
-*/
+
 
 if (isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_GET["id"] > 0) {
     $idProvincia = $_GET["id"];
@@ -152,6 +155,13 @@ include_once "header.php";
                             <label for="txtTelefono">Localidad:</label>
                             <select class="form-control" name="lstLocalidad" id="lstLocalidad" required>
                                 <option value="" disabled selected>Seleccionar</option>
+                                <?php foreach ($aLocalidades as $localidad): ?>
+                                    <?php if ($cliente->fk_idlocalidad == $localidad->idlocalidad): ?>
+                                        <option selected value="<?php echo $localidad->idlocalidad; ?>"><?php echo $localidad->nombre; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?php echo $localidad->idlocalidad; ?>"><?php echo $localidad->nombre; ?></option>
+                                    <?php endif;?>
+                                <?php endforeach;?>
                             </select>
                         </div>
                         <div class="col-12 form-group">
