@@ -7,11 +7,11 @@ include_once "config.php";
 include_once "entidades/usuario.php";
 
 $usuario = new Usuario();
-$usuario->usuario = "consultas";
+$usuario->usuario = "admin";
 $usuario->clave = password_hash("admin123", PASSWORD_DEFAULT);
-$usuario->nombre = "Consultas";
-$usuario->apellido = "";
-$usuario->correo = "consultas@correo.com";
+$usuario->nombre = "darian";
+$usuario->apellido = "garibotti";
+$usuario->correo = "darian@correo.com";
 $usuario->insertar();
 
 echo "Usuario insertado.";

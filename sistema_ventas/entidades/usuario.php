@@ -129,7 +129,7 @@ class Usuario
         $mysqli->close();
     }
 
-    public function obtenerPorUsuario($usuario, $idusuario = "")
+    public function obtenerPorUsuario($nombreUsuario)
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idusuario,
@@ -139,27 +139,24 @@ class Usuario
                         apellido,
                         correo
                 FROM usuarios
-                WHERE usuario = '$usuario' AND idusuario <> '$idusuario'";
+                WHERE usuario = '$nombreUsuario'";
 
         if (!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 
         //Convierte el resultado en un array asociativo
-        if ($fila = $resultado->fetch_assoc()) {
+        if ($fila = $resultado->fetch_assoc()){
             $this->idusuario = $fila["idusuario"];
             $this->usuario = $fila["usuario"];
             $this->clave = $fila["clave"];
             $this->nombre = $fila["nombre"];
             $this->apellido = $fila["apellido"];
             $this->correo = $fila["correo"];
-            return true;
-        } else {
-            return false;
         }
         $mysqli->close();
-
     }
+
     public function obtenerPorCorreo($correo, $idusuario = "")
     {
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);

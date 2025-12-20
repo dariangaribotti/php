@@ -4,19 +4,21 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include_once "config.php";
-
-$claveEncriptada = password_hash("admin123", PASSWORD_DEFAULT);
+include_once "entidades/usuario.php";
 
 //Es postback?
 if($_POST){
     
-    $usuario = trim($_POST["txtUsuario"]);
-    $clave = trim($_POST["txtClave"]);
+    $nombreUsuario = trim($_REQUEST["txtUsuario"]);
+    $clave = trim($_REQUEST["txtClave"]);
 
     //Si el usuario es admin y la clave es admin123:
-    if($usuario == "admin" && $clave == "admin123"){
+    $entidadUsuario = new Usuario();
+    $entidadUsuario->obtenerPorUsuario($nombreUsuario);
+
+    if($entidadUsuario->usuario == $nombreUsuario && password_verify($clave, $entidadUsuario->clave)){
         //Creamos una variable de session llamada nombre y tenga de valor tu nombre"
-        $_SESSION["nombre"] = "Darian";
+        $_SESSION["nombre"] = $entidadUsuario->nombre . " " . $entidadUsuario->apellido;
         //y Redireccionamos al index
         header("Location: index.php");
     } else {
