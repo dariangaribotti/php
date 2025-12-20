@@ -79,7 +79,7 @@ class Venta {
         $sql = "DELETE FROM ventas
                 WHERE idventa = " . $this->idventa;
 
-        if($mysqli->query($sql)){
+        if(!$mysqli->query($sql)){
             printf("Error en query%s\n", $mysqli->error . " " . $sql);
         }
     }
@@ -95,9 +95,9 @@ class Venta {
                     preciounitario,
                     total
                 FROM ventas
-                WHERE fk_idcliente" . $idCliente;
+                WHERE fk_idcliente = $idCliente";
                 
-        if (!$resultado = $mysqli->query($sql)) {
+        if(!$resultado = $mysqli->query($sql)) {
             printf("Error en query: %s\n", $mysqli->error . " " . $sql);
         }
 

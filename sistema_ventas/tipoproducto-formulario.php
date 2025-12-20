@@ -24,7 +24,7 @@ if(isset($_POST["btnGuardar"])){
     $tipoproducto->cargarFormulario($_REQUEST);
     
     $producto = new Producto();
-    if($producto->obtenerPorTipo($producto->fk_idtipoproducto = $tipoproducto->idtipoproducto)){
+    if($producto->obtenerPorTipo($tipoproducto->idtipoproducto)){
         $msg["texto"] = "No se puede eliminar un producto asociado";
         $msg["codigo"] = "alert-danger";
     } else {

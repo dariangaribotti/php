@@ -66,8 +66,13 @@ if(isset($_POST["btnGuardar"])){
     if(file_exists("file/$producto->imagen")){
         unlink("file/$producto->imagen");
     }
-    $producto->eliminar();
-    header("Location: producto-listado.php");
+    if($producto->obtenerPorTipo($producto->fk_idtipoproducto)){
+        $msg["codigo"] = "alert-danger";
+        $msg["texto"] = "No se puede eliminar un tipo de producto asociado";
+    } else {
+        $producto->eliminar();
+        header("Location: producto-listado.php");
+    }
 }
 
 if(isset($_GET["id"]) && $_GET["id"] > 0){
